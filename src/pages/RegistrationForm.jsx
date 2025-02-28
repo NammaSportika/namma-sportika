@@ -164,14 +164,14 @@ const RegistrationForm = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#f4e4c9] flex flex-col p-4 sm:p-6 md:p-8">
+    <div className="min-h-screen w-full bg-[#f4e4c9] flex flex-col p-3 sm:p-6 md:p-8">
       {/* Page Heading */}
-      <div className="w-full flex items-center justify-center my-8 md:my-12">
-        <div className="relative flex items-center w-full max-w-4xl px-4">
+      <div className="w-full flex items-center justify-center my-4 sm:my-8 md:my-12">
+        <div className="relative flex items-center w-full max-w-4xl px-2 sm:px-4">
           {/* Left Line */}
           <div className="flex-grow h-[2px] bg-gradient-to-r from-transparent to-[#004740]"></div>
           {/* Heading Text */}
-          <h1 className="mx-8 text-4xl font-bold text-[#004740]">
+          <h1 className="mx-2 sm:mx-8 text-xl sm:text-2xl md:text-4xl font-bold text-[#004740] text-center whitespace-nowrap">
             REGISTRATION FORM
           </h1>
           {/* Right Line */}
@@ -179,21 +179,21 @@ const RegistrationForm = () => {
         </div>
       </div>
       <Card className="w-full max-w-2xl mx-auto shadow-xl rounded-2xl overflow-hidden border-2 border-[#a58255]">
-        <CardContent className="p-4 sm:p-6 md:p-8 bg-[#07534c]">
+        <CardContent className="p-3 sm:p-6 md:p-8 bg-[#07534c]">
           {/* Success Alert */}
           {submitStatus === 'success' && (
-            <Alert className="mb-6 bg-[#a58255]/20 border border-[#a58255] text-[#e7fefe]">
-              <CheckCircle2 className="h-5 w-5 text-[#a58255]" />
-              <AlertDescription className="ml-2">
+            <Alert className="mb-4 sm:mb-6 bg-[#a58255]/20 border border-[#a58255] text-[#e7fefe]">
+              <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-[#a58255]" />
+              <AlertDescription className="ml-2 text-xs sm:text-sm">
                 Thank you! Your registration has been submitted successfully.
               </AlertDescription>
             </Alert>
           )}
           {/* Error Alert */}
           {submitStatus === 'error' && (
-            <Alert className="mb-6 bg-red-100/20 border border-red-300 text-[#e7fefe]">
-              <AlertCircle className="h-5 w-5 text-red-300" />
-              <AlertDescription className="ml-2">
+            <Alert className="mb-4 sm:mb-6 bg-red-100/20 border border-red-300 text-[#e7fefe]">
+              <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-red-300" />
+              <AlertDescription className="ml-2 text-xs sm:text-sm">
                 There was an error submitting your registration. Please try again.
               </AlertDescription>
             </Alert>
@@ -201,7 +201,7 @@ const RegistrationForm = () => {
           <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
             {/* Name Field */}
             <div>
-              <Label htmlFor="name" className="text-sm font-medium text-[#e7fefe] mb-2 inline-block">
+              <Label htmlFor="name" className="text-xs sm:text-sm font-medium text-[#e7fefe] mb-1 sm:mb-2 inline-block">
                 Name <span className="text-red-400">*</span>
               </Label>
               <div className="relative">
@@ -212,27 +212,27 @@ const RegistrationForm = () => {
                   placeholder="Enter your full name"
                   value={formData.name}
                   onChange={handleChange}
-                  className={`pl-10 pr-10 py-3 rounded-lg bg-[#07534c]/90 border-2 ${
+                  className={`pl-8 sm:pl-10 pr-8 sm:pr-10 py-2 sm:py-3 rounded-lg bg-[#07534c]/90 border-2 text-sm ${
                     errors.name ? 'border-red-400' : 'border-[#a58255]/30'
                   } text-[#e7fefe] placeholder-[#e7fefe]/60 focus:ring-2 focus:ring-[#a58255]`}
                 />
-                <User className="h-5 w-5 text-[#e7fefe]/60 absolute left-3 top-3.5" />
+                <User className="h-4 w-4 sm:h-5 sm:w-5 text-[#e7fefe]/60 absolute left-2 sm:left-3 top-2.5 sm:top-3.5" />
                 {errors.name && (
-                  <div className="absolute right-3 top-3.5">
-                    <AlertCircle className="h-5 w-5 text-red-400" />
+                  <div className="absolute right-2 sm:right-3 top-2.5 sm:top-3.5">
+                    <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-red-400" />
                   </div>
                 )}
               </div>
               {errors.name && (
-                <p className="mt-2 flex items-center gap-1 text-sm text-red-400">
-                  <AlertCircle className="h-4 w-4" /> {errors.name}
+                <p className="mt-1 sm:mt-2 flex items-center gap-1 text-xs sm:text-sm text-red-400">
+                  <AlertCircle className="h-3 w-3 sm:h-4 sm:w-4" /> {errors.name}
                 </p>
               )}
             </div>
 
             {/* University Field */}
             <div>
-              <Label htmlFor="university" className="text-sm font-medium text-[#e7fefe] mb-2 inline-block">
+              <Label htmlFor="university" className="text-xs sm:text-sm font-medium text-[#e7fefe] mb-1 sm:mb-2 inline-block">
                 Name of the University / College <span className="text-red-400">*</span>
               </Label>
               <div className="relative">
@@ -240,33 +240,33 @@ const RegistrationForm = () => {
                   type="text"
                   id="university"
                   name="university"
-                  placeholder="Enter your university or college name"
+                  placeholder="Enter university or college name"
                   value={formData.university}
                   onChange={handleChange}
-                  className={`pl-10 pr-10 py-3 rounded-lg bg-[#07534c]/90 border-2 ${
+                  className={`pl-8 sm:pl-10 pr-8 sm:pr-10 py-2 sm:py-3 rounded-lg bg-[#07534c]/90 border-2 text-sm ${
                     errors.university ? 'border-red-400' : 'border-[#a58255]/30'
                   } text-[#e7fefe] placeholder-[#e7fefe]/60 focus:ring-2 focus:ring-[#a58255]`}
                 />
-                <Users className="h-5 w-5 text-[#e7fefe]/60 absolute left-3 top-3.5" />
+                <Users className="h-4 w-4 sm:h-5 sm:w-5 text-[#e7fefe]/60 absolute left-2 sm:left-3 top-2.5 sm:top-3.5" />
                 {errors.university && (
-                  <div className="absolute right-3 top-3.5">
-                    <AlertCircle className="h-5 w-5 text-red-400" />
+                  <div className="absolute right-2 sm:right-3 top-2.5 sm:top-3.5">
+                    <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-red-400" />
                   </div>
                 )}
               </div>
               {errors.university && (
-                <p className="mt-2 flex items-center gap-1 text-sm text-red-400">
-                  <AlertCircle className="h-4 w-4" /> {errors.university}
+                <p className="mt-1 sm:mt-2 flex items-center gap-1 text-xs sm:text-sm text-red-400">
+                  <AlertCircle className="h-3 w-3 sm:h-4 sm:w-4" /> {errors.university}
                 </p>
               )}
             </div>
 
             {/* Captain Details */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               {/* Captain Name */}
               <div>
-                <Label htmlFor="captainName" className="text-sm font-medium text-[#e7fefe] mb-2 inline-block">
-                  Name of the Team Captain <span className="text-red-400">*</span>
+                <Label htmlFor="captainName" className="text-xs sm:text-sm font-medium text-[#e7fefe] mb-1 sm:mb-2 inline-block">
+                  Team Captain <span className="text-red-400">*</span>
                 </Label>
                 <div className="relative">
                   <Input
@@ -276,28 +276,28 @@ const RegistrationForm = () => {
                     placeholder="Enter team captain's name"
                     value={formData.captainName}
                     onChange={handleChange}
-                    className={`pl-10 pr-10 py-3 rounded-lg bg-[#07534c]/90 border-2 ${
+                    className={`pl-8 sm:pl-10 pr-8 sm:pr-10 py-2 sm:py-3 rounded-lg bg-[#07534c]/90 border-2 text-sm ${
                       errors.captainName ? 'border-red-400' : 'border-[#a58255]/30'
                     } text-[#e7fefe] placeholder-[#e7fefe]/60 focus:ring-2 focus:ring-[#a58255]`}
                   />
-                  <User className="h-5 w-5 text-[#e7fefe]/60 absolute left-3 top-3.5" />
+                  <User className="h-4 w-4 sm:h-5 sm:w-5 text-[#e7fefe]/60 absolute left-2 sm:left-3 top-2.5 sm:top-3.5" />
                   {errors.captainName && (
-                    <div className="absolute right-3 top-3.5">
-                      <AlertCircle className="h-5 w-5 text-red-400" />
+                    <div className="absolute right-2 sm:right-3 top-2.5 sm:top-3.5">
+                      <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-red-400" />
                     </div>
                   )}
                 </div>
                 {errors.captainName && (
-                  <p className="mt-2 flex items-center gap-1 text-sm text-red-400">
-                    <AlertCircle className="h-4 w-4" /> {errors.captainName}
+                  <p className="mt-1 sm:mt-2 flex items-center gap-1 text-xs sm:text-sm text-red-400">
+                    <AlertCircle className="h-3 w-3 sm:h-4 sm:w-4" /> {errors.captainName}
                   </p>
                 )}
               </div>
 
               {/* Captain Mobile */}
               <div>
-                <Label htmlFor="captainMobile" className="text-sm font-medium text-[#e7fefe] mb-2 inline-block">
-                  Team Captain Mobile No <span className="text-red-400">*</span>
+                <Label htmlFor="captainMobile" className="text-xs sm:text-sm font-medium text-[#e7fefe] mb-1 sm:mb-2 inline-block">
+                  Captain Mobile <span className="text-red-400">*</span>
                 </Label>
                 <div className="relative">
                   <Input
@@ -307,31 +307,31 @@ const RegistrationForm = () => {
                     placeholder="Enter captain's mobile number"
                     value={formData.captainMobile}
                     onChange={handleChange}
-                    className={`pl-10 pr-10 py-3 rounded-lg bg-[#07534c]/90 border-2 ${
+                    className={`pl-8 sm:pl-10 pr-8 sm:pr-10 py-2 sm:py-3 rounded-lg bg-[#07534c]/90 border-2 text-sm ${
                       errors.captainMobile ? 'border-red-400' : 'border-[#a58255]/30'
                     } text-[#e7fefe] placeholder-[#e7fefe]/60 focus:ring-2 focus:ring-[#a58255]`}
                   />
-                  <Phone className="h-5 w-5 text-[#e7fefe]/60 absolute left-3 top-3.5" />
+                  <Phone className="h-4 w-4 sm:h-5 sm:w-5 text-[#e7fefe]/60 absolute left-2 sm:left-3 top-2.5 sm:top-3.5" />
                   {errors.captainMobile && (
-                    <div className="absolute right-3 top-3.5">
-                      <AlertCircle className="h-5 w-5 text-red-400" />
+                    <div className="absolute right-2 sm:right-3 top-2.5 sm:top-3.5">
+                      <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-red-400" />
                     </div>
                   )}
                 </div>
                 {errors.captainMobile && (
-                  <p className="mt-2 flex items-center gap-1 text-sm text-red-400">
-                    <AlertCircle className="h-4 w-4" /> {errors.captainMobile}
+                  <p className="mt-1 sm:mt-2 flex items-center gap-1 text-xs sm:text-sm text-red-400">
+                    <AlertCircle className="h-3 w-3 sm:h-4 sm:w-4" /> {errors.captainMobile}
                   </p>
                 )}
               </div>
             </div>
 
             {/* Coach Details */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               {/* Coach Name */}
               <div>
-                <Label htmlFor="coachName" className="text-sm font-medium text-[#e7fefe] mb-2 inline-block">
-                  Name of the Coach <span className="text-red-400">*</span>
+                <Label htmlFor="coachName" className="text-xs sm:text-sm font-medium text-[#e7fefe] mb-1 sm:mb-2 inline-block">
+                  Coach Name <span className="text-red-400">*</span>
                 </Label>
                 <div className="relative">
                   <Input
@@ -341,28 +341,28 @@ const RegistrationForm = () => {
                     placeholder="Enter coach's name"
                     value={formData.coachName}
                     onChange={handleChange}
-                    className={`pl-10 pr-10 py-3 rounded-lg bg-[#07534c]/90 border-2 ${
+                    className={`pl-8 sm:pl-10 pr-8 sm:pr-10 py-2 sm:py-3 rounded-lg bg-[#07534c]/90 border-2 text-sm ${
                       errors.coachName ? 'border-red-400' : 'border-[#a58255]/30'
                     } text-[#e7fefe] placeholder-[#e7fefe]/60 focus:ring-2 focus:ring-[#a58255]`}
                   />
-                  <User className="h-5 w-5 text-[#e7fefe]/60 absolute left-3 top-3.5" />
+                  <User className="h-4 w-4 sm:h-5 sm:w-5 text-[#e7fefe]/60 absolute left-2 sm:left-3 top-2.5 sm:top-3.5" />
                   {errors.coachName && (
-                    <div className="absolute right-3 top-3.5">
-                      <AlertCircle className="h-5 w-5 text-red-400" />
+                    <div className="absolute right-2 sm:right-3 top-2.5 sm:top-3.5">
+                      <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-red-400" />
                     </div>
                   )}
                 </div>
                 {errors.coachName && (
-                  <p className="mt-2 flex items-center gap-1 text-sm text-red-400">
-                    <AlertCircle className="h-4 w-4" /> {errors.coachName}
+                  <p className="mt-1 sm:mt-2 flex items-center gap-1 text-xs sm:text-sm text-red-400">
+                    <AlertCircle className="h-3 w-3 sm:h-4 sm:w-4" /> {errors.coachName}
                   </p>
                 )}
               </div>
 
               {/* Coach Mobile */}
               <div>
-                <Label htmlFor="coachMobile" className="text-sm font-medium text-[#e7fefe] mb-2 inline-block">
-                  Coach Mobile No <span className="text-red-400">*</span>
+                <Label htmlFor="coachMobile" className="text-xs sm:text-sm font-medium text-[#e7fefe] mb-1 sm:mb-2 inline-block">
+                  Coach Mobile <span className="text-red-400">*</span>
                 </Label>
                 <div className="relative">
                   <Input
@@ -372,20 +372,20 @@ const RegistrationForm = () => {
                     placeholder="Enter coach's mobile number"
                     value={formData.coachMobile}
                     onChange={handleChange}
-                    className={`pl-10 pr-10 py-3 rounded-lg bg-[#07534c]/90 border-2 ${
+                    className={`pl-8 sm:pl-10 pr-8 sm:pr-10 py-2 sm:py-3 rounded-lg bg-[#07534c]/90 border-2 text-sm ${
                       errors.coachMobile ? 'border-red-400' : 'border-[#a58255]/30'
                     } text-[#e7fefe] placeholder-[#e7fefe]/60 focus:ring-2 focus:ring-[#a58255]`}
                   />
-                  <Phone className="h-5 w-5 text-[#e7fefe]/60 absolute left-3 top-3.5" />
+                  <Phone className="h-4 w-4 sm:h-5 sm:w-5 text-[#e7fefe]/60 absolute left-2 sm:left-3 top-2.5 sm:top-3.5" />
                   {errors.coachMobile && (
-                    <div className="absolute right-3 top-3.5">
-                      <AlertCircle className="h-5 w-5 text-red-400" />
+                    <div className="absolute right-2 sm:right-3 top-2.5 sm:top-3.5">
+                      <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-red-400" />
                     </div>
                   )}
                 </div>
                 {errors.coachMobile && (
-                  <p className="mt-2 flex items-center gap-1 text-sm text-red-400">
-                    <AlertCircle className="h-4 w-4" /> {errors.coachMobile}
+                  <p className="mt-1 sm:mt-2 flex items-center gap-1 text-xs sm:text-sm text-red-400">
+                    <AlertCircle className="h-3 w-3 sm:h-4 sm:w-4" /> {errors.coachMobile}
                   </p>
                 )}
               </div>
@@ -393,8 +393,8 @@ const RegistrationForm = () => {
 
             {/* Sport Dropdown */}
             <div>
-              <Label htmlFor="sport" className="text-sm font-medium text-[#e7fefe] mb-2 inline-block">
-                Sport you would like to take part of <span className="text-red-400">*</span>
+              <Label htmlFor="sport" className="text-xs sm:text-sm font-medium text-[#e7fefe] mb-1 sm:mb-2 inline-block">
+                Sport <span className="text-red-400">*</span>
               </Label>
               <div className="relative">
                 <select
@@ -402,27 +402,27 @@ const RegistrationForm = () => {
                   name="sport"
                   value={formData.sport}
                   onChange={handleChange}
-                  className={`w-full pl-4 pr-10 py-3 rounded-lg appearance-none bg-[#07534c]/90 border-2 ${
+                  className={`w-full pl-3 sm:pl-4 pr-8 sm:pr-10 py-2 sm:py-3 rounded-lg appearance-none bg-[#07534c]/90 border-2 text-sm ${
                     errors.sport ? 'border-red-400' : 'border-[#a58255]/30'
                   } text-[#e7fefe] focus:ring-2 focus:ring-[#a58255]`}
                 >
                   <option value="" className="bg-[#07534c]">Select sport</option>
                   {sportOptions.map((sport, index) => (
-                    <option key={index} value={sport} className="bg-[#07534c]">{sport}</option>
+                    <option key={index} value={sport} className="bg-[#07534c] text-sm">{sport}</option>
                   ))}
                 </select>
-                <ChevronDown className="h-5 w-5 text-[#e7fefe]/60 absolute right-3 top-3.5 pointer-events-none" />
+                <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-[#e7fefe]/60 absolute right-2 sm:right-3 top-2.5 sm:top-3.5 pointer-events-none" />
               </div>
               {errors.sport && (
-                <p className="mt-2 flex items-center gap-1 text-sm text-red-400">
-                  <AlertCircle className="h-4 w-4" /> {errors.sport}
+                <p className="mt-1 sm:mt-2 flex items-center gap-1 text-xs sm:text-sm text-red-400">
+                  <AlertCircle className="h-3 w-3 sm:h-4 sm:w-4" /> {errors.sport}
                 </p>
               )}
             </div>
 
             {/* Payment Link */}
             <div>
-              <Label className="text-sm font-medium text-[#e7fefe] mb-2 inline-block">
+              <Label className="text-xs sm:text-sm font-medium text-[#e7fefe] mb-1 sm:mb-2 inline-block">
                 Payment link <span className="text-red-400">*</span>
               </Label>
               <div className="flex items-center">
@@ -430,7 +430,7 @@ const RegistrationForm = () => {
                   href="https://gevents.gitam.edu/registration/Mzg4Mw..." 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-[#6c7cf5] underline hover:text-[#c9a574] font-medium"
+                  className="text-xs sm:text-sm text-[#6c7cf5] underline hover:text-[#c9a574] font-medium break-all"
                 >
                   https://gevents.gitam.edu/registration/Mzg4Mw...
                 </a>
@@ -439,8 +439,8 @@ const RegistrationForm = () => {
 
             {/* Transaction ID */}
             <div>
-              <Label htmlFor="transactionId" className="text-sm font-medium text-[#e7fefe] mb-2 inline-block">
-                Transaction Id of Payment <span className="text-red-400">*</span>
+              <Label htmlFor="transactionId" className="text-xs sm:text-sm font-medium text-[#e7fefe] mb-1 sm:mb-2 inline-block">
+                Transaction Id <span className="text-red-400">*</span>
               </Label>
               <div className="relative">
                 <Input
@@ -450,31 +450,31 @@ const RegistrationForm = () => {
                   placeholder="Enter transaction ID"
                   value={formData.transactionId}
                   onChange={handleChange}
-                  className={`pl-10 pr-10 py-3 rounded-lg bg-[#07534c]/90 border-2 ${
+                  className={`pl-8 sm:pl-10 pr-8 sm:pr-10 py-2 sm:py-3 rounded-lg bg-[#07534c]/90 border-2 text-sm ${
                     errors.transactionId ? 'border-red-400' : 'border-[#a58255]/30'
                   } text-[#e7fefe] placeholder-[#e7fefe]/60 focus:ring-2 focus:ring-[#a58255]`}
                 />
-                <CreditCard className="h-5 w-5 text-[#e7fefe]/60 absolute left-3 top-3.5" />
+                <CreditCard className="h-4 w-4 sm:h-5 sm:w-5 text-[#e7fefe]/60 absolute left-2 sm:left-3 top-2.5 sm:top-3.5" />
                 {errors.transactionId && (
-                  <div className="absolute right-3 top-3.5">
-                    <AlertCircle className="h-5 w-5 text-red-400" />
+                  <div className="absolute right-2 sm:right-3 top-2.5 sm:top-3.5">
+                    <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-red-400" />
                   </div>
                 )}
               </div>
               {errors.transactionId && (
-                <p className="mt-2 flex items-center gap-1 text-sm text-red-400">
-                  <AlertCircle className="h-4 w-4" /> {errors.transactionId}
+                <p className="mt-1 sm:mt-2 flex items-center gap-1 text-xs sm:text-sm text-red-400">
+                  <AlertCircle className="h-3 w-3 sm:h-4 sm:w-4" /> {errors.transactionId}
                 </p>
               )}
             </div>
 
             {/* Payment Screenshot */}
             <div>
-              <Label htmlFor="paymentFile" className="text-sm font-medium text-[#e7fefe] mb-2 inline-block">
-                Payment Screenshot in pdf format <span className="text-red-400">*</span>
+              <Label htmlFor="paymentFile" className="text-xs sm:text-sm font-medium text-[#e7fefe] mb-1 sm:mb-2 inline-block">
+                Payment Screenshot (PDF) <span className="text-red-400">*</span>
               </Label>
               <div className="relative">
-                <div className={`flex items-center justify-center w-full h-24 border-2 border-dashed rounded-lg ${
+                <div className={`flex items-center justify-center w-full h-16 sm:h-24 border-2 border-dashed rounded-lg ${
                   errors.paymentFile ? 'border-red-400' : 'border-[#a58255]/30'
                 } bg-[#07534c]/90 hover:bg-[#07534c] transition-all duration-200 cursor-pointer`}>
                   <input
@@ -486,25 +486,32 @@ const RegistrationForm = () => {
                     onChange={handleFileChange}
                   />
                   <label htmlFor="paymentFile" className="cursor-pointer flex flex-col items-center justify-center w-full h-full">
-                    <Upload className="w-8 h-8 text-[#e7eafe]" />
-                    <span className="mt-2 text-sm text-[#e7fefe]">
-                      {fileName ? fileName : "Click to upload (Max 1 GB)"}
+                    <Upload className="w-6 h-6 sm:w-8 sm:h-8 text-[#e7eafe]" />
+                    <span className="mt-1 sm:mt-2 text-xs sm:text-sm text-[#e7fefe] text-center px-2">
+                      {fileName ? (fileName.length > 20 ? fileName.substring(0, 20) + "..." : fileName) : "Click to upload (Max 1 GB)"}
                     </span>
                   </label>
                 </div>
               </div>
               {errors.paymentFile && (
-                <p className="mt-2 flex items-center gap-1 text-sm text-red-400">
-                  <AlertCircle className="h-4 w-4" /> {errors.paymentFile}
+                <p className="mt-1 sm:mt-2 flex items-center gap-1 text-xs sm:text-sm text-red-400">
+                  <AlertCircle className="h-3 w-3 sm:h-4 sm:w-4" /> {errors.paymentFile}
                 </p>
               )}
             </div>
 
             {/* WhatsApp Community */}
-            <div className="bg-[#a58255]/20 p-4 rounded-lg border border-[#a58255]/30">
-              <h3 className="text-[#e7fefe] font-medium mb-2">Join The WhatsApp Community</h3>
-              <p className="text-[#e7fefe]/80 text-sm mb-2">
-                https://chat.whatsapp.com/BrB8LpD84cz7Aepko7zvmZ
+            <div className="bg-[#a58255]/20 p-2 sm:p-4 rounded-lg border border-[#a58255]/30">
+              <h3 className="text-[#e7fefe] font-medium text-xs sm:text-sm mb-1 sm:mb-2">Join The WhatsApp Community</h3>
+              <p className="text-[#e7fefe]/80 text-xs mb-1 sm:mb-2 break-all">
+              <a 
+                  href="https://chat.whatsapp.com/BrB8LpD84cz7Aepko7zvmZ" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-xs sm:text-sm text-[#6c7cf5] underline hover:text-[#c9a574] font-medium break-all"
+                >
+                  https://chat.whatsapp.com/BrB8LpD84cz7Aepko7zvmZ
+                </a>
               </p>
               <p className="text-[#e7fefe]/80 text-xs italic">
                 <strong>NOTE:</strong> Only For Coaches & Captains. Join only the respective Sport Group's.
@@ -512,11 +519,11 @@ const RegistrationForm = () => {
             </div>
 
             {/* Submit and Clear Buttons */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className={`w-full bg-[#a58255] hover:bg-[#9b774a] text-[#e7fefe] font-semibold py-3 sm:py-4 rounded-lg transition-all duration-200 ${
+                className={`w-full bg-[#a58255] hover:bg-[#9b774a] text-[#e7fefe] font-semibold text-sm py-2 sm:py-3 md:py-4 rounded-lg transition-all duration-200 ${
                   isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:scale-[1.02]'
                 } shadow-md hover:shadow-lg`}
               >
@@ -525,14 +532,14 @@ const RegistrationForm = () => {
               <Button
                 type="button"
                 onClick={handleReset}
-                className="w-full bg-[#07534c] border-2 border-[#a58255]/50 text-[#e7fefe] font-semibold py-3 sm:py-4 rounded-lg transition-all duration-200 hover:bg-[#06413a] hover:border-[#a58255] shadow-md hover:shadow-lg"
+                className="w-full bg-[#07534c] border-2 border-[#a58255]/50 text-[#e7fefe] font-semibold text-sm py-2 sm:py-3 md:py-4 rounded-lg transition-all duration-200 hover:bg-[#06413a] hover:border-[#a58255] shadow-md hover:shadow-lg"
               >
                 Clear form
               </Button>
             </div>
           </form>
           {/* Privacy Note */}
-          <p className="text-xs font-medium text-[#e7fefe]/60 text-center mt-4 sm:mt-6">
+          <p className="text-xs font-medium text-[#e7fefe]/60 text-center mt-3 sm:mt-6">
             Your information is secure and will only be used for event registration purposes.
           </p>
         </CardContent>

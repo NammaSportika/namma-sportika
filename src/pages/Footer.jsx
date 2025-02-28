@@ -109,7 +109,7 @@ const Footer = () => {
               <motion.li whileHover={{ x: 5 }} className="w-full">
                 <address className="flex items-center justify-center md:justify-start gap-3 text-[#e7fefe] not-italic text-base">
                   <FiMapPin className="w-5 h-5" />
-                  <span>GITAM University, Bengaluru</span>
+                  <span>GITAM University, Bengaluru.</span>
                 </address>
               </motion.li>
             </ul>
@@ -150,7 +150,7 @@ const Footer = () => {
                   >
                     Vansh Agrawal
                   </a>
-                  <span className="text-[#e7fefe]">from GITAM University, Bengaluru</span>
+                  <span className="text-[#e7fefe]">from GITAM University, Bengaluru.</span>
                 </div>
               </div>
             </div>

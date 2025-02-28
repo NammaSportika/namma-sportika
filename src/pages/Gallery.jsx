@@ -124,6 +124,16 @@ const Gallery = ({
   const firstRow = images.slice(0, Math.ceil(images.length / 3));
   const secondRow = images.slice(Math.ceil(images.length / 3), Math.ceil(images.length / 3) * 2);
   const thirdRow = images.slice(Math.ceil(images.length / 3) * 2);
+  
+  // Calculate durations based on number of items in each row
+  // This ensures the visual speed appears the same regardless of item count
+  const baseDuration = 30; // seconds
+  const firstRowDuration = baseDuration;
+  const secondRowDuration = baseDuration;
+  
+  // Adjust third row duration to match visual speed of other rows
+  // If the third row has fewer items, we need to reduce the duration proportionally
+  const thirdRowDuration = baseDuration * (thirdRow.length / Math.max(firstRow.length, 1));
 
   return (
     <section className="py-8 relative overflow-hidden bg-[#F4E4CA] min-h-screen">
@@ -151,7 +161,7 @@ const Gallery = ({
         {/* Marquee Gallery */}
         <div className="relative flex w-full flex-col items-center justify-center overflow-hidden gap-4">
           {/* First row - left to right */}
-          <Marquee pauseOnHover className="[--duration:30s]">
+          <Marquee pauseOnHover className={`[--duration:${firstRowDuration}s]`}>
             {firstRow.map((image, index) => (
               <ImageCard 
                 key={`row1-${index}`} 
@@ -164,7 +174,7 @@ const Gallery = ({
           </Marquee>
           
           {/* Second row - right to left */}
-          <Marquee reverse pauseOnHover className="[--duration:30s]">
+          <Marquee reverse pauseOnHover className={`[--duration:${secondRowDuration}s]`}>
             {secondRow.map((image, index) => (
               <ImageCard 
                 key={`row2-${index}`} 
@@ -176,8 +186,8 @@ const Gallery = ({
             ))}
           </Marquee>
 
-          {/* Third row - left to right (same as first row) */}
-          <Marquee pauseOnHover className="[--duration:30s]">
+          {/* Third row - left to right (with adjusted duration) */}
+          <Marquee pauseOnHover className={`[--duration:${thirdRowDuration}s]`}>
             {thirdRow.map((image, index) => (
               <ImageCard 
                 key={`row3-${index}`} 
@@ -188,8 +198,6 @@ const Gallery = ({
               />
             ))}
           </Marquee>
-          
-          {/* Removed gradient overlays */}
         </div>
       </div>
     </section>

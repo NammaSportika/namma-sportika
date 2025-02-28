@@ -43,7 +43,7 @@ const Rulebook = () => {
           {/* Responsive PDF Viewer using responsive padding-bottom for aspect ratio */}
           <div className="relative w-full overflow-hidden pb-[85%] sm:pb-[75%] md:pb-[65%] lg:pb-[56.25%]">
             <object
-              data="/pdf/namma Sportika Rule Book  GITAM BLR_compressed (1).pdf"
+              data="/pdf/namma Sportika Rule Book GITAM BLR.pdf"
               type="application/pdf"
               className="absolute top-0 left-0 w-full h-full rounded-lg"
               onLoad={() => setIsLoading(false)}
@@ -51,7 +51,7 @@ const Rulebook = () => {
               <p className="text-center py-10">
                 Your browser doesn't support embedded PDFs.
                 <a 
-                  href="/pdf/namma Sportika Rule Book  GITAM BLR_compressed (1).pdf" 
+                  href="/pdf/namma Sportika Rule Book GITAM BLR.pdf" 
                   download="Namma-Sportika-Rulebook.pdf"
                   className="text-[#004740] font-medium ml-2 underline hover:text-[#003730]"
                 >
