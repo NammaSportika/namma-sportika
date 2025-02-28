@@ -18,7 +18,7 @@ import KabaddiPage from './pages/Events/KabaddiPage';
 import VolleyballPage from './pages/Events/VolleyballPage';
 import ThrowballPage from './pages/Events/ThrowballPage';
 import RegistrationForm from './pages/RegistrationForm';
-
+import AdminDashboard from './pages/AdminDashboard';
 // Wrapper component to conditionally render the navbar
 const AppContent = () => {
   const location = useLocation();
@@ -48,6 +48,7 @@ const AppContent = () => {
           <Route path="/events/throwball" element={<ThrowballPage />} />
           <Route path="/events/volleyball" element={<VolleyballPage />} />
           <Route path='/registration' element={<RegistrationForm />} />
+          <Route path='/admin' element={<AdminDashboard />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

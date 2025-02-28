@@ -266,7 +266,7 @@ const RegistrationForm = () => {
               {/* Captain Name */}
               <div>
                 <Label htmlFor="captainName" className="text-xs sm:text-sm font-medium text-[#e7fefe] mb-1 sm:mb-2 inline-block">
-                  Nmae of the Team Captain <span className="text-red-400">*</span>
+                  Name of the Team Captain <span className="text-red-400">*</span>
                 </Label>
                 <div className="relative">
                   <Input
