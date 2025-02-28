@@ -6,9 +6,7 @@ import Footer from './pages/Footer';
 import AboutGitamSports from './pages/AboutGitamSports ';
 import Events from './pages/Events/Events';
 import ContactUs from './pages/ContactUs';
-import OurTeam from './pages/OurTeam';
 import Gallery from './pages/Gallery';
-import FeedbackForm from './pages/FeedbackForm';
 import NotFound from './pages/NotFound';
 import Rulebook from './pages/Rulebook';
 import AthleticsPage from './pages/Events/AthleticsPage';
@@ -34,11 +32,9 @@ const AppContent = () => {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/about" element={<AboutGitamSports />} />
-          <Route path="/team" element={<OurTeam />} />
           <Route path="/events" element={<Events />} />
           <Route path="/gallery" element={<Gallery />} />
-          <Route path="/contact" element={<ContactUs />} />
-          <Route path="/feedback" element={<FeedbackForm />} />         
+          <Route path="/contact" element={<ContactUs />} />         
           <Route path="/rulebook" element={<Rulebook />} />
           <Route path="/signup" element={<div>Sign Up Page</div>} />
           <Route path="/login" element={<div>Login Page</div>} />

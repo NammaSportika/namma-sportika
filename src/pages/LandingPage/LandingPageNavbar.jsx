@@ -41,11 +41,10 @@ const LandingPageNavbar = ({ user, handleLogout }) => {
     { to: '/', label: 'Home', onClick: () => navigate('/') },
     { to: '/about', label: 'About', onClick: () => navigate('/about') },
     { to: '/events', label: 'Events', onClick: () => navigate('/events') },
+    { to: '/registration', label: 'Registration', onClick: () => navigate('/registration') },
     { to: '/gallery', label: 'Gallery', onClick: () => navigate('/gallery') },
-    { to: '/team', label: 'Team', onClick: () => navigate('/team') },
     { to: '/rulebook', label: 'Rulebook', onClick: () => navigate('/rulebook') },
-    { to: '/contact', label: 'Contact', onClick: () => navigate('/contact') },
-    { to: '/feedback', label: 'Feedback', onClick: () => navigate('/feedback') },
+    { to: '/contact', label: 'Contact', onClick: () => navigate('/contact') }
   ];
 
   // Check if the link is active

@@ -266,7 +266,7 @@ const RegistrationForm = () => {
               {/* Captain Name */}
               <div>
                 <Label htmlFor="captainName" className="text-xs sm:text-sm font-medium text-[#e7fefe] mb-1 sm:mb-2 inline-block">
-                  Team Captain <span className="text-red-400">*</span>
+                  Nmae of the Team Captain <span className="text-red-400">*</span>
                 </Label>
                 <div className="relative">
                   <Input
@@ -297,7 +297,7 @@ const RegistrationForm = () => {
               {/* Captain Mobile */}
               <div>
                 <Label htmlFor="captainMobile" className="text-xs sm:text-sm font-medium text-[#e7fefe] mb-1 sm:mb-2 inline-block">
-                  Captain Mobile <span className="text-red-400">*</span>
+                  Captain Mobile No. <span className="text-red-400">*</span>
                 </Label>
                 <div className="relative">
                   <Input
@@ -362,7 +362,7 @@ const RegistrationForm = () => {
               {/* Coach Mobile */}
               <div>
                 <Label htmlFor="coachMobile" className="text-xs sm:text-sm font-medium text-[#e7fefe] mb-1 sm:mb-2 inline-block">
-                  Coach Mobile <span className="text-red-400">*</span>
+                  Coach Mobile No. <span className="text-red-400">*</span>
                 </Label>
                 <div className="relative">
                   <Input
@@ -440,7 +440,7 @@ const RegistrationForm = () => {
             {/* Transaction ID */}
             <div>
               <Label htmlFor="transactionId" className="text-xs sm:text-sm font-medium text-[#e7fefe] mb-1 sm:mb-2 inline-block">
-                Transaction Id <span className="text-red-400">*</span>
+                Transaction Id of the Payment <span className="text-red-400">*</span>
               </Label>
               <div className="relative">
                 <Input
@@ -471,7 +471,7 @@ const RegistrationForm = () => {
             {/* Payment Screenshot */}
             <div>
               <Label htmlFor="paymentFile" className="text-xs sm:text-sm font-medium text-[#e7fefe] mb-1 sm:mb-2 inline-block">
-                Payment Screenshot (PDF) <span className="text-red-400">*</span>
+                Payment Screenshot (PDF Only) <span className="text-red-400">*</span>
               </Label>
               <div className="relative">
                 <div className={`flex items-center justify-center w-full h-16 sm:h-24 border-2 border-dashed rounded-lg ${
@@ -520,6 +520,15 @@ const RegistrationForm = () => {
 
             {/* Submit and Clear Buttons */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+             
+              <Button
+                type="button"
+                onClick={handleReset}
+                className="w-full bg-[#07534c] border-2 border-[#a58255]/50 text-[#e7fefe] font-semibold text-sm py-2 sm:py-3 md:py-4 rounded-lg transition-all duration-200 hover:bg-[#06413a] hover:border-[#a58255] shadow-md hover:shadow-lg"
+              >
+                Clear form
+              </Button>
+
               <Button
                 type="submit"
                 disabled={isSubmitting}
@@ -528,13 +537,6 @@ const RegistrationForm = () => {
                 } shadow-md hover:shadow-lg`}
               >
                 {isSubmitting ? 'Submitting...' : 'Submit'}
-              </Button>
-              <Button
-                type="button"
-                onClick={handleReset}
-                className="w-full bg-[#07534c] border-2 border-[#a58255]/50 text-[#e7fefe] font-semibold text-sm py-2 sm:py-3 md:py-4 rounded-lg transition-all duration-200 hover:bg-[#06413a] hover:border-[#a58255] shadow-md hover:shadow-lg"
-              >
-                Clear form
               </Button>
             </div>
           </form>
