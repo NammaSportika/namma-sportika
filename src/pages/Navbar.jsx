@@ -55,7 +55,7 @@ const Navbar = ({ user, handleLogout }) => {
     <>
       <div className="fixed top-0 left-0 w-full flex justify-center z-30 bg-[#f4e4c9]">
         <nav 
-          className={`rounded-full my-1 sm:my-3 px-2 sm:px-6 py-1 sm:py-3 shadow-lg transition-all duration-300 ${
+          className={`rounded-full my-1 sm:my-3 px-2 sm:px-6 py-2 sm:py-3 shadow-lg transition-all duration-300 ${
             scrolled ? 'bg-opacity-95' : 'bg-opacity-85'
           } overflow-x-auto max-w-[95%] no-scrollbar`}
           style={{ backgroundColor: '#004740' }}

@@ -15,7 +15,7 @@ const Marquee = ({
     <div
       {...props}
       className={cn(
-        "group flex overflow-hidden p-2 [--duration:40s] [--gap:1rem] gap-[var(--gap)]",
+        "group flex overflow-hidden p-2 sm:p-4 [--duration:40s] [--gap:1rem] gap-[var(--gap)]",
         vertical ? "flex-col" : "flex-row",
         className
       )}
@@ -91,7 +91,7 @@ const ImageCard = ({
   return (
     <figure
       className={cn(
-        "relative h-full w-64 cursor-pointer overflow-hidden rounded-xl border p-4 mx-2 bg-[#07534c] hover:bg-[#07534c] transition-all duration-300"
+        "relative h-full w-48 sm:w-64 cursor-pointer overflow-hidden rounded-xl border p-4 mx-2 bg-[#07534c] hover:bg-[#07534c] transition-all duration-300"
       )}
     >
       <div className="flex flex-col items-center">
@@ -137,14 +137,13 @@ const Gallery = ({
 
   return (
     <section className="py-8 relative overflow-hidden bg-[#F4E4CA] min-h-screen">
-
       {/* Page Heading */}
-      <div className="w-full flex items-center justify-center my-8 md:my-12">
+      <div className="w-full flex items-center justify-center my-6 sm:my-8 md:my-12">
         <div className="relative flex items-center w-full max-w-6xl px-4">
           {/* Left Line */}
           <div className="flex-grow h-[2px] bg-gradient-to-r from-transparent to-[#004740]"></div>
           {/* Heading Text */}
-          <h1 className="mx-8 text-4xl font-bold text-[#004740]">
+          <h1 className="mx-4 sm:mx-8 text-3xl sm:text-4xl font-bold text-[#004740]">
             GALLERY
           </h1>
           {/* Right Line */}
@@ -157,7 +156,6 @@ const Gallery = ({
       
       {/* Content Container */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-
         {/* Marquee Gallery */}
         <div className="relative flex w-full flex-col items-center justify-center overflow-hidden gap-4">
           {/* First row - left to right */}
