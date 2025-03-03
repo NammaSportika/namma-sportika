@@ -21,9 +21,10 @@ const CricketPage = () => {
       generalRules: [
         "Matches will be played as per ICC rules.",
         "Players must wear proper cricket attire.",
-        "Teams must report 30 minutes before the match.",
+        "Teams must be report 30 minutes before the match.",
         "A 15-minute grace period is given before declaring a forfeit.",
-        "Umpire's & organizers decision is final."
+        "Umpire's & organizers decision is final.",
+        "Team Composition: 11+5(substitutes) players."
       ],
       formatRules: [
         "Knockout rounds: 10 overs per side.",

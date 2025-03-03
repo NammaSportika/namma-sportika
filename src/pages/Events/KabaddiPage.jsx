@@ -22,10 +22,10 @@ const KabaddiPage = () => {
         "Matches will follow PKL rules.",
         "A 15-minute grace period applies before a forfeit.",
         "Proper sports attire (with Kabaddi shoes) is mandatory.",
-        "Team Composition: 7+5(substitutes) players"
+        "Team Composition: 7+5(substitutes) players."
       ],
       formatRules: [
-        "Knockout rounds: 20-minute half",
+        "Knockout rounds: 20-minute half.",
         "Finals: 20-minute half.",
         "Tiebreaker: Golden Raid."
       ]

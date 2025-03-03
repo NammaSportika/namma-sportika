@@ -13,8 +13,8 @@ const ChessPage = () => {
       {
         category: "Mixed (team of 5)",
         entryFee: 500,
-        firstPrize: 2500,
-        secondPrize: 1500
+        firstPrize: 5000,
+        secondPrize: 3000
       }
     ],
     rules: {
@@ -26,12 +26,12 @@ const ChessPage = () => {
         "Each player must press the clock with the same hand they move the piece.",
         "Any violation of fair play will result in disqualification.",
         "College ID card is mandatory for all participants.",
-        "Team Composition: 5 players (2 girls in team is mandatory)"
+        "Team Composition: 5 players( 2 girls in team is mandatory)."
       ],
       formatRules: [
-        "Format: Swiss League / Knockout (based on participation)",
+        "Format: Swiss League / Knockout (based on participation).",
         "Time control: Flat15 (Rapid) or 5 (Blitz)",
-        "(Decided based on event format)",
+        "(Decided based on event format).",
         "In case of a tie, a tiebreaker match will be played."
       ]
     }

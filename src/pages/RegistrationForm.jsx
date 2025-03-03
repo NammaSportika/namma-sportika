@@ -13,8 +13,10 @@ import {
 import { Alert, AlertDescription } from '../components/ui/alert';
 import { Card, CardContent } from "../components/ui/card";
 import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
-import { Label } from "../components/ui/label";
+import { Input } from '../components/ui/input';
+import { Label } from '../components/ui/label';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from '../firebase/config';
 
 const RegistrationForm = () => {  
   // Sports options with fee details
@@ -34,20 +36,20 @@ const RegistrationForm = () => {
 
   const [formData, setFormData] = useState({
     name: '',
+    email: '',
     university: '',
     captainName: '',
     captainMobile: '',
     coachName: '',
     coachMobile: '',
     sport: '',
-    paymentStatus: 'Paid',
-    transactionId: '',
-    paymentFile: null
+    paymentStatus: 'Paid'
   });
   const [errors, setErrors] = useState({});
   const [submitStatus, setSubmitStatus] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [fileName, setFileName] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const validateForm = () => {
     const newErrors = {};
@@ -77,11 +79,8 @@ const RegistrationForm = () => {
     if (!formData.sport) {
       newErrors.sport = 'Please select a sport';
     }
-    if (!formData.transactionId.trim()) {
-      newErrors.transactionId = 'Transaction ID is required';
-    }
-    if (!formData.paymentFile) {
-      newErrors.paymentFile = 'Payment screenshot is required';
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
     }
     
     setErrors(newErrors);
@@ -90,30 +89,47 @@ const RegistrationForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError(null);
+
     if (validateForm()) {
       try {
-        setIsSubmitting(true);
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        setSubmitStatus('success');
+        const submissionData = {
+          name: formData.name,
+          email: formData.email,
+          university: formData.university,
+          captainName: formData.captainName,
+          captainMobile: formData.captainMobile,
+          coachName: formData.coachName,
+          coachMobile: formData.coachMobile,
+          sport: formData.sport,
+          paymentStatus: formData.paymentStatus,
+          timestamp: new Date()
+        };
+
+        await addDoc(collection(db, 'registrations'), submissionData);
+
         setFormData({
           name: '',
+          email: '',
           university: '',
           captainName: '',
           captainMobile: '',
           coachName: '',
           coachMobile: '',
           sport: '',
-          paymentStatus: 'Paid',
-          transactionId: '',
-          paymentFile: null
+          paymentStatus: 'Paid'
         });
-        setFileName('');
-      } catch (error) {
+        setSubmitStatus('success');
+      } catch (err) {
+        console.error('Error during form submission:', err);
+        setError('Error submitting form. Please try again.');
         setSubmitStatus('error');
       } finally {
-        setIsSubmitting(false);
+        setLoading(false);
       }
+    } else {
+      setLoading(false);
     }
   };
 
@@ -148,15 +164,14 @@ const RegistrationForm = () => {
   const handleReset = () => {
     setFormData({
       name: '',
+      email: '',
       university: '',
       captainName: '',
       captainMobile: '',
       coachName: '',
       coachMobile: '',
       sport: '',
-      paymentStatus: 'Paid',
-      transactionId: '',
-      paymentFile: null
+      paymentStatus: 'Paid'
     });
     setFileName('');
     setErrors({});
@@ -168,19 +183,15 @@ const RegistrationForm = () => {
       {/* Page Heading */}
       <div className="w-full flex items-center justify-center my-4 sm:my-8 md:my-12">
         <div className="relative flex items-center w-full max-w-4xl px-2 sm:px-4">
-          {/* Left Line */}
           <div className="flex-grow h-[2px] bg-gradient-to-r from-transparent to-[#004740]"></div>
-          {/* Heading Text */}
           <h1 className="mx-2 sm:mx-8 text-xl sm:text-2xl md:text-4xl font-bold text-[#004740] text-center whitespace-nowrap">
             REGISTRATION FORM
           </h1>
-          {/* Right Line */}
           <div className="flex-grow h-[2px] bg-gradient-to-r from-[#004740] to-transparent"></div>
         </div>
       </div>
       <Card className="w-full max-w-2xl mx-auto shadow-xl rounded-2xl overflow-hidden border-2 border-[#a58255]">
         <CardContent className="p-3 sm:p-6 md:p-8 bg-[#07534c]">
-          {/* Success Alert */}
           {submitStatus === 'success' && (
             <Alert className="mb-4 sm:mb-6 bg-[#a58255]/20 border border-[#a58255] text-[#e7fefe]">
               <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-[#a58255]" />
@@ -189,7 +200,6 @@ const RegistrationForm = () => {
               </AlertDescription>
             </Alert>
           )}
-          {/* Error Alert */}
           {submitStatus === 'error' && (
             <Alert className="mb-4 sm:mb-6 bg-red-100/20 border border-red-300 text-[#e7fefe]">
               <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-red-300" />
@@ -226,6 +236,37 @@ const RegistrationForm = () => {
               {errors.name && (
                 <p className="mt-1 sm:mt-2 flex items-center gap-1 text-xs sm:text-sm text-red-400">
                   <AlertCircle className="h-3 w-3 sm:h-4 sm:w-4" /> {errors.name}
+                </p>
+              )}
+            </div>
+            
+            {/* Email Field (Moved under Name Field) */}
+            <div>
+              <Label htmlFor="email" className="text-xs sm:text-sm font-medium text-[#e7fefe] mb-1 sm:mb-2 inline-block">
+                Email <span className="text-red-400">*</span>
+              </Label>
+              <div className="relative">
+                <Input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className={`pl-8 sm:pl-10 pr-8 sm:pr-10 py-2 sm:py-3 rounded-lg bg-[#07534c]/90 border-2 text-sm ${
+                    errors.email ? 'border-red-400' : 'border-[#a58255]/30'
+                  } text-[#e7fefe] placeholder-[#e7fefe]/60 focus:ring-2 focus:ring-[#a58255]`}
+                />
+                <Mail className="h-4 w-4 sm:h-5 sm:w-5 text-[#e7fefe]/60 absolute left-2 sm:left-3 top-2.5 sm:top-3.5" />
+                {errors.email && (
+                  <div className="absolute right-2 sm:right-3 top-2.5 sm:top-3.5">
+                    <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-red-400" />
+                  </div>
+                )}
+              </div>
+              {errors.email && (
+                <p className="mt-1 sm:mt-2 flex items-center gap-1 text-xs sm:text-sm text-red-400">
+                  <AlertCircle className="h-3 w-3 sm:h-4 sm:w-4" /> {errors.email}
                 </p>
               )}
             </div>
@@ -420,7 +461,7 @@ const RegistrationForm = () => {
               )}
             </div>
 
-            {/* Payment Link */}
+            {/* Payment Link (Static) */}
             <div>
               <Label className="text-xs sm:text-sm font-medium text-[#e7fefe] mb-1 sm:mb-2 inline-block">
                 Payment link <span className="text-red-400">*</span>
@@ -437,74 +478,11 @@ const RegistrationForm = () => {
               </div>
             </div>
 
-            {/* Transaction ID */}
-            <div>
-              <Label htmlFor="transactionId" className="text-xs sm:text-sm font-medium text-[#e7fefe] mb-1 sm:mb-2 inline-block">
-                Transaction Id of the Payment <span className="text-red-400">*</span>
-              </Label>
-              <div className="relative">
-                <Input
-                  type="text"
-                  id="transactionId"
-                  name="transactionId"
-                  placeholder="Enter transaction ID"
-                  value={formData.transactionId}
-                  onChange={handleChange}
-                  className={`pl-8 sm:pl-10 pr-8 sm:pr-10 py-2 sm:py-3 rounded-lg bg-[#07534c]/90 border-2 text-sm ${
-                    errors.transactionId ? 'border-red-400' : 'border-[#a58255]/30'
-                  } text-[#e7fefe] placeholder-[#e7fefe]/60 focus:ring-2 focus:ring-[#a58255]`}
-                />
-                <CreditCard className="h-4 w-4 sm:h-5 sm:w-5 text-[#e7fefe]/60 absolute left-2 sm:left-3 top-2.5 sm:top-3.5" />
-                {errors.transactionId && (
-                  <div className="absolute right-2 sm:right-3 top-2.5 sm:top-3.5">
-                    <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-red-400" />
-                  </div>
-                )}
-              </div>
-              {errors.transactionId && (
-                <p className="mt-1 sm:mt-2 flex items-center gap-1 text-xs sm:text-sm text-red-400">
-                  <AlertCircle className="h-3 w-3 sm:h-4 sm:w-4" /> {errors.transactionId}
-                </p>
-              )}
-            </div>
-
-            {/* Payment Screenshot */}
-            <div>
-              <Label htmlFor="paymentFile" className="text-xs sm:text-sm font-medium text-[#e7fefe] mb-1 sm:mb-2 inline-block">
-                Payment Screenshot (PDF Only) <span className="text-red-400">*</span>
-              </Label>
-              <div className="relative">
-                <div className={`flex items-center justify-center w-full h-16 sm:h-24 border-2 border-dashed rounded-lg ${
-                  errors.paymentFile ? 'border-red-400' : 'border-[#a58255]/30'
-                } bg-[#07534c]/90 hover:bg-[#07534c] transition-all duration-200 cursor-pointer`}>
-                  <input
-                    type="file"
-                    id="paymentFile"
-                    name="paymentFile"
-                    accept=".pdf"
-                    className="hidden"
-                    onChange={handleFileChange}
-                  />
-                  <label htmlFor="paymentFile" className="cursor-pointer flex flex-col items-center justify-center w-full h-full">
-                    <Upload className="w-6 h-6 sm:w-8 sm:h-8 text-[#e7eafe]" />
-                    <span className="mt-1 sm:mt-2 text-xs sm:text-sm text-[#e7fefe] text-center px-2">
-                      {fileName ? (fileName.length > 20 ? fileName.substring(0, 20) + "..." : fileName) : "Click to upload (Max 1 GB)"}
-                    </span>
-                  </label>
-                </div>
-              </div>
-              {errors.paymentFile && (
-                <p className="mt-1 sm:mt-2 flex items-center gap-1 text-xs sm:text-sm text-red-400">
-                  <AlertCircle className="h-3 w-3 sm:h-4 sm:w-4" /> {errors.paymentFile}
-                </p>
-              )}
-            </div>
-
             {/* WhatsApp Community */}
             <div className="bg-[#a58255]/20 p-2 sm:p-4 rounded-lg border border-[#a58255]/30">
               <h3 className="text-[#e7fefe] font-medium text-xs sm:text-sm mb-1 sm:mb-2">Join The WhatsApp Community</h3>
               <p className="text-[#e7fefe]/80 text-xs mb-1 sm:mb-2 break-all">
-              <a 
+                <a 
                   href="https://chat.whatsapp.com/BrB8LpD84cz7Aepko7zvmZ" 
                   target="_blank" 
                   rel="noopener noreferrer"
@@ -520,7 +498,6 @@ const RegistrationForm = () => {
 
             {/* Submit and Clear Buttons */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-             
               <Button
                 type="button"
                 onClick={handleReset}
@@ -531,16 +508,15 @@ const RegistrationForm = () => {
 
               <Button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={loading}
                 className={`w-full bg-[#a58255] hover:bg-[#9b774a] text-[#e7fefe] font-semibold text-sm py-2 sm:py-3 md:py-4 rounded-lg transition-all duration-200 ${
-                  isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:scale-[1.02]'
+                  loading ? 'opacity-70 cursor-not-allowed' : 'hover:scale-[1.02]'
                 } shadow-md hover:shadow-lg`}
               >
-                {isSubmitting ? 'Submitting...' : 'Submit'}
+                {loading ? 'Submitting...' : 'Submit'}
               </Button>
             </div>
           </form>
-          {/* Privacy Note */}
           <p className="text-xs font-medium text-[#e7fefe]/60 text-center mt-3 sm:mt-6">
             Your information is secure and will only be used for event registration purposes.
           </p>

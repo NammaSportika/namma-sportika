@@ -28,7 +28,7 @@ const BasketballPage = () => {
         "Matches will follow FIBA rules.",
         "A 15-minute grace period is given before declaring a forfeit.",
         "Players must wear proper basketball attire, including jerseys and shoes.",
-        "Team Composition: 5+5(substitutes) players"
+        "Team Composition: 5+5(substitutes) players."
       ],
       formatRules: [
         "Knockout format for initial rounds (10-minute quarters).",

@@ -26,7 +26,7 @@ const itemVariants = {
 
 const SportikaHero = () => {
   return (
-    <div className="w-full bg-[#f4e4c9]">
+    <div className="w-screen overflow-hidden bg-[#f4e4c9]">
       {/* Header with Page Heading */}
       <header className="py-8">
         <div className="flex items-center justify-center w-full max-w-5xl px-4 mx-auto">
@@ -50,9 +50,9 @@ const SportikaHero = () => {
           {/* Image Container */}
           <div className="w-full md:w-1/2 flex justify-center">
             <img
-              src="/imgs/AboutGS/6.svg"
+              src="/imgs/AboutGS/1.svg"
               alt="About GITAM"
-              className="max-w-full h-auto object-cover rounded-lg"
+              className="max-w-full h-auto object-cover"
             />
           </div>
           {/* Text Content */}

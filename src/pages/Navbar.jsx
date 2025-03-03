@@ -43,8 +43,8 @@ const Navbar = ({ user, handleLogout }) => {
     { to: '/events', label: 'Events', onClick: () => navigate('/events') },
     { to: '/registration', label: 'Registration', onClick: () => navigate('/registration') },
     { to: '/gallery', label: 'Gallery', onClick: () => navigate('/gallery') },
-    { to: '/rulebook', label: 'Rulebook', onClick: () => navigate('/rulebook') },
-    { to: '/contact', label: 'Contact', onClick: () => navigate('/contact') }
+    { to: '/contact', label: 'Contact', onClick: () => navigate('/contact') },
+    // { to: '/feedback', label: 'Feedback', onClick: () => navigate('/feedback') }
   ];
 
   // Check if the link is active

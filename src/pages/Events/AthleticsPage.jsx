@@ -37,7 +37,7 @@ const AthleticsPage = () => {
     ],
     rules: {
       generalRules: [
-        "Races will follow the World Athletics rules.",
+        "Races will follow the World Athletics Rules.",
         "Proper running gear is mandatory.",
         "False starts will lead to disqualification."        
       ],

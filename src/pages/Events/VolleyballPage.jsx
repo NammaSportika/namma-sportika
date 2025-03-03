@@ -23,7 +23,7 @@ const VolleyballPage = () => {
         "Teams must report 15 minutes before match time.",
         "A 15-minute grace period applies before declaring a forfeit.",
         "Proper volleyball attire is mandatory.",
-        "Team Composition: 6+5(substitutes) players"
+        "Team Composition: 6+5(substitutes) players."
       ],
       formatRules: [
         "Knockout rounds: Best of 3 sets.",

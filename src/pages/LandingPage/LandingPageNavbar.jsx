@@ -43,8 +43,8 @@ const LandingPageNavbar = ({ user, handleLogout }) => {
     { to: '/events', label: 'Events', onClick: () => navigate('/events') },
     { to: '/registration', label: 'Registration', onClick: () => navigate('/registration') },
     { to: '/gallery', label: 'Gallery', onClick: () => navigate('/gallery') },
-    { to: '/rulebook', label: 'Rulebook', onClick: () => navigate('/rulebook') },
-    { to: '/contact', label: 'Contact', onClick: () => navigate('/contact') }
+    { to: '/contact', label: 'Contact', onClick: () => navigate('/contact') },
+    // { to: '/feedback', label: 'Feedback', onClick: () => navigate('/feedback') }
   ];
 
   // Check if the link is active
@@ -54,7 +54,7 @@ const LandingPageNavbar = ({ user, handleLogout }) => {
     <>
       <div className="fixed top-0 left-0 w-full flex justify-center z-30">
         <nav 
-          className={`rounded-full my-1 sm:my-3 px-2 sm:px-6 py-1 sm:py-3 shadow-lg transition-all duration-300 ${
+          className={`rounded-full my-1 sm:my-3 px-2 sm:px-6 py-2 sm:py-3 shadow-lg transition-all duration-300 ${
             scrolled ? 'bg-opacity-95' : 'bg-opacity-85'
           } overflow-x-auto max-w-[95%] no-scrollbar`}
           style={{ backgroundColor: '#004740' }}

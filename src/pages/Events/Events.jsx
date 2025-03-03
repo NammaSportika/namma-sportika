@@ -50,7 +50,7 @@ const Events = () => {
       path: "/events/chess"
     },
     {
-      image: "/imgs/Events/13.svg",
+      image: "/imgs/Events/2.svg",
       title: "Cricket",
       description: "(Men)",
       path: "/events/cricket"
@@ -68,7 +68,7 @@ const Events = () => {
       path: "/events/kabaddi"
     },
     {
-      image: "/imgs/Events/15.svg",
+      image: "/imgs/Events/1.svg",
       title: "Throwball",
       description: "(Men & Women)",
       path: "/events/throwball"
