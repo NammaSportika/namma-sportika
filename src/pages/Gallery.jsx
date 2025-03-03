@@ -16,12 +16,14 @@ const getStaticallyGithubUrl = (url) => {
   const cleanPath = url.startsWith('/') ? url.substring(1) : url;
   
   // For production, use Statically's GitHub CDN
-  // Replace these with your actual GitHub username/repo/branch
   const githubUser = 'NammaSportika';
   const githubRepo = 'namma-sportika';
   const githubBranch = 'main';
   
-  return `https://cdn.statically.io/gh/${githubUser}/${githubRepo}/${githubBranch}/${cleanPath}`;
+  // Add "public" prefix to the path since images are in the public folder
+  const fullPath = `public/${cleanPath}`;
+  
+  return `https://cdn.statically.io/gh/${githubUser}/${githubRepo}/${githubBranch}/${fullPath}`;
 };
 
 // Marquee Component (unchanged)
