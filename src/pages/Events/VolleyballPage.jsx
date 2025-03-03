@@ -6,7 +6,7 @@ const VolleyballPage = () => {
     title: "Volleyball",
     category: "Team",
     description: "Men",
-    image: "/imgs/Events/11.svg",
+    image: "/imgs/Events/15.png",
     teamComposition: "6 players + 5 substitutes",
     entryFee: "₹ 1500 per team",
     prizes: [

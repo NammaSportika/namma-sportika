@@ -248,7 +248,7 @@ const OurTeam = () => {
     },
     {
       image: "/imgs/TeamPics/2.svg",
-      name: "Siddharth Verma",
+      name: "Sidhartha Varma",
       linkedin: "https://www.linkedin.com/in/sidhartha-varma-konduru-67224134a/", // Replace with actual LinkedIn URL
       phone: "+91-7032192991",
       email: "skonduru2005@gmail.com"

@@ -6,7 +6,7 @@ const FootballPage = () => {
     title: "Football",
     category: "Team",
     description: "Men - 11 vs 11",
-    image: "/imgs/Events/10.svg",
+    image: "/imgs/Events/12.png",
     teamComposition: "11 players + 5 substitutes",
     entryFee: "₹ 1500 per team",
     prizes: [

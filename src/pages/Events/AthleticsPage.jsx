@@ -6,7 +6,7 @@ const AthleticsPage = () => {
     title: "Athletics",
     category: "Individual",
     description: "Men & Women - 100m & 200m",
-    image: "/imgs/Events/8.svg",
+    image: "/imgs/Events/8.png",
     teamComposition: "Individual participants",
     entryFee: "₹ 500 per participant",
     prizes: [

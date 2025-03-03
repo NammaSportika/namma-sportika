@@ -6,7 +6,7 @@ const ChessPage = () => {
     title: "Chess",
     category: "Mixed",
     description: "Mixed Team Event",
-    image: "/imgs/Events/12.svg",
+    image: "/imgs/Events/10.png",
     teamComposition: "5 players (2 girls in team is mandatory)",
     entryFee: "₹ 500 per team",
     prizes: [

@@ -32,49 +32,49 @@ const Events = () => {
   // Combined array with images, titles, and descriptions
   const highlightItems = [
     {
-      image: "/imgs/Events/8.svg",
+      image: "/imgs/Events/8.png",
       title: "Athletics",
       description: "(Men & Women - 100m & 200m)",
       path: "/events/athletics"
     },
     {
-      image: "/imgs/Events/9.svg",
+      image: "/imgs/Events/9.png",
       title: "Basketball",
       description: "(Men & Women)",
       path: "/events/basketball"
     },
     {
-      image: "/imgs/Events/12.svg",
+      image: "/imgs/Events/10.png",
       title: "Chess",
       description: "(Mixed)",
       path: "/events/chess"
     },
     {
-      image: "/imgs/Events/2.svg",
+      image: "/imgs/Events/11.png",
       title: "Cricket",
       description: "(Men)",
       path: "/events/cricket"
     },
     {
-      image: "/imgs/Events/10.svg",
+      image: "/imgs/Events/12.png",
       title: "Football",
       description: "(Men - 11 vs 11)",
       path: "/events/football"
     },
     {
-      image: "/imgs/Events/14.svg",
+      image: "/imgs/Events/13.png",
       title: "Kabaddi",
       description: "(Men)",
       path: "/events/kabaddi"
     },
     {
-      image: "/imgs/Events/1.svg",
+      image: "/imgs/Events/14.png",
       title: "Throwball",
       description: "(Men & Women)",
       path: "/events/throwball"
     },
     {
-      image: "/imgs/Events/11.svg",
+      image: "/imgs/Events/15.png",
       title: "Volleyball",
       description: "(Men)",
       path: "/events/volleyball"

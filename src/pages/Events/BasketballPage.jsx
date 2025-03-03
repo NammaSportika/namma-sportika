@@ -6,7 +6,7 @@ const BasketballPage = () => {
     title: "Basketball",
     category: "Team",
     description: "Men & Women",
-    image: "/imgs/Events/9.svg",
+    image: "/imgs/Events/9.png",
     teamComposition: "5 players + 5 substitutes",
     entryFee: "₹ 1500 per team",
     prizes: [

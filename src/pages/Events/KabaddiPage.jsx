@@ -6,7 +6,7 @@ const KabaddiPage = () => {
     title: "Kabaddi",
     category: "Team",
     description: "Men",
-    image: "/imgs/Events/14.svg",
+    image: "/imgs/Events/13.png",
     teamComposition: "7 players + 5 substitutes",
     entryFee: "₹ 1500 per team",
     prizes: [

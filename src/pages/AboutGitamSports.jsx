@@ -40,7 +40,7 @@ const AboutGitamSports = () => {
           {/* Image */}
           <div className="w-full md:w-1/2 flex justify-center">
             <img
-              src="/imgs/AboutGS/6.svg"
+              src="/imgs/AboutGS/2.png"
               alt="About GITAM"
               className="max-w-full h-auto object-cover rounded-lg"
             />
@@ -80,7 +80,7 @@ const AboutGitamSports = () => {
           {/* Text (shown on the left on larger screens) */}
           <div className="order-1 md:order-2 w-full md:w-1/2 flex justify-center">
             <img
-              src="/imgs/AboutGS/3.svg"
+              src="/imgs/AboutGS/1.png"
               alt="About GITAM SPORTS"
               className="max-w-full h-auto object-cover rounded-lg"
             />

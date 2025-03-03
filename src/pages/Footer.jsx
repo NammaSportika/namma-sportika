@@ -42,19 +42,33 @@ const Footer = () => {
           {/* Quick Links Section */}
           <FooterSection title="Quick Access" delay={0.2}>
             <ul className="flex flex-col items-center space-y-4 w-full">
-              {['Brochure', 'Info Poster', 'Rulebook', 'Registration'].map((item) => (
+              {[
+                { name: 'Brochure', file: 'namma Sportika Sponsorship Brochure.pdf' },
+                { name: 'Info Poster', file: 'NammaSportika_InfoPoster.pdf' },
+                { name: 'Rulebook', file: 'namma Sportika Rule Book  STD.pdf' },
+                { name: 'Registration', isLink: true }
+              ].map((item) => (
                 <motion.li
-                  key={item}
+                  key={item.name}
                   whileHover={{ y: -3 }}
                   className="w-full text-center"
                 >
-                  <Link 
-                    to={`/${item.toLowerCase().replace(' ', '-')}`} 
-                    className="text-[#e7fefe] hover:text-[#f9f871] text-base py-1 px-4 rounded-lg hover:bg-[#006056] transition-colors duration-300"
-
-                  >
-                    {item}
-                  </Link>
+                  {item.isLink ? (
+                    <Link 
+                      to={`/${item.name.toLowerCase().replace(' ', '-')}`} 
+                      className="text-[#e7fefe] hover:text-[#f9f871] text-base py-1 px-4 rounded-lg hover:bg-[#006056] transition-colors duration-300"
+                    >
+                      {item.name}
+                    </Link>
+                  ) : (
+                    <a
+                      href={`/pdf/${item.file}`}
+                      download
+                      className="text-[#e7fefe] hover:text-[#f9f871] text-base py-1 px-4 rounded-lg hover:bg-[#006056] transition-colors duration-300"
+                    >
+                      {item.name}
+                    </a>
+                  )}
                 </motion.li>
               ))}
             </ul>
@@ -123,4 +137,3 @@ const Footer = () => {
 };
 
 export default Footer;
-

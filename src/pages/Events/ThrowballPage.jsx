@@ -6,7 +6,7 @@ const ThrowballPage = () => {
     title: "Throwball",
     category: "Team",
     description: "Men & Women",
-    image: "/imgs/Events/15.svg",
+    image: "/imgs/Events/14.png",
     teamComposition: "7 players + 5 substitutes",
     entryFee: "₹ 1500 per team",
     prizes: [
