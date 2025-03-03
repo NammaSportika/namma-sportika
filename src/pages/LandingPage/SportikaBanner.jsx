@@ -42,7 +42,7 @@ const SportikaBanner = () => {
           <div className="relative aspect-[4/3] w-full top-15">
             {/* TiltedCard with object-contain to preserve aspect ratio */}
             <TiltedCard
-              imageSrc="/imgs/BannerImg/3.png"
+              imageSrc="/imgs/BannerImg/Bannner.png"
               altText="Sportika Logo"
               captionText="Sportika"
               containerHeight="100%"
