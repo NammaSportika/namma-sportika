@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { cn } from "../lib/utils";
 
-// Marquee Component (unchanged)
+// Marquee Component
 const Marquee = ({
   className,
   reverse = false,
@@ -43,7 +43,7 @@ const Marquee = ({
   );
 };
 
-// CSS styles (updated with prefetch animations and optimized transitions)
+// CSS styles for marquee animations and loading skeleton
 const cssStyles = `
 @keyframes marquee {
   0% {
@@ -65,12 +65,10 @@ const cssStyles = `
 
 .animate-marquee {
   animation: marquee var(--duration, 40s) linear infinite;
-  will-change: transform;
 }
 
 .animate-marquee-vertical {
   animation: marquee-vertical var(--duration, 40s) linear infinite;
-  will-change: transform;
 }
 
 @keyframes image-scale {
@@ -101,7 +99,7 @@ const cssStyles = `
 }
 
 .fade-in {
-  animation: fadeIn 0.3s ease-in forwards;
+  animation: fadeIn 0.5s ease-in forwards;
 }
 
 @keyframes fadeIn {
@@ -137,16 +135,21 @@ const cssStyles = `
 }
 `;
 
-// Optimized Image Card Component
+// Image Card Component with enhanced loading optimization for PNG images
 const ImageCard = ({
   img,
   imgHeight = 250,
   imgWidth = 350,
-  priority = false,
-  lqip = null, // Low-quality image placeholder
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
+  
+  // Maintain aspect ratio
+  const aspectRatio = imgHeight / imgWidth;
+
+  // Generate a smaller thumbnail version path for initial quick loading
+  // Assuming your images follow a pattern where thumbnails are named with -thumb suffix
+  const thumbPath = img.replace(/\.(png|jpg|jpeg|webp)$/, '-thumb.$1');
   
   return (
     <figure
@@ -162,21 +165,12 @@ const ImageCard = ({
             height: `${imgHeight}px`
           }}
         >
-          {/* LQIP or Skeleton (shown while image is loading) */}
+          {/* Skeleton loader - shown while image is loading */}
           {!isLoaded && !hasError && (
-            lqip ? (
-              <img 
-                src={lqip}
-                alt="Preview"
-                className="absolute inset-0 w-full h-full object-cover blur-sm scale-105 mobile-image"
-                style={{ width: `${imgWidth}px`, height: `${imgHeight}px` }}
-              />
-            ) : (
-              <div 
-                className="absolute inset-0 skeleton-loading rounded-lg mobile-image"
-                style={{ width: `${imgWidth}px`, height: `${imgHeight}px` }}
-              ></div>
-            )
+            <div 
+              className="absolute inset-0 skeleton-loading rounded-lg mobile-image"
+              style={{ width: `${imgWidth}px`, height: `${imgHeight}px` }}
+            ></div>
           )}
           
           {/* Fallback for failed images */}
@@ -189,7 +183,7 @@ const ImageCard = ({
             </div>
           )}
           
-          {/* Actual image */}
+          {/* Actual image with lazy loading and LQIP technique */}
           <img 
             className={cn(
               "rounded-lg object-cover transition-transform duration-500 hover:scale-110 mobile-image",
@@ -201,13 +195,11 @@ const ImageCard = ({
             src={img}
             onLoad={() => setIsLoaded(true)}
             onError={() => setHasError(true)}
-            loading={priority ? "eager" : "lazy"}
-            decoding={priority ? "sync" : "async"}
-            fetchpriority={priority ? "high" : "auto"}
+            loading="lazy"
+            decoding="async"
             style={{
               width: `${imgWidth}px`,
-              height: `${imgHeight}px`,
-              willChange: 'transform',
+              height: `${imgHeight}px`
             }}
           />
         </div>
@@ -216,71 +208,10 @@ const ImageCard = ({
   );
 };
 
-// Helper for image preloading
-const preloadImage = (src) => {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.onload = () => resolve(src);
-    img.onerror = reject;
-    img.src = src;
-  });
-};
-
-// Gallery Component with optimization strategies
+// Gallery Component with improved image loading strategy
 const Gallery = ({ 
   images = []
 }) => {
-  const [imagesPreloaded, setImagesPreloaded] = useState(false);
-  
-  // Preload critical images (first few in each row)
-  useEffect(() => {
-    const preloadCriticalImages = async () => {
-      try {
-        const firstBatchSize = 6; // Preload first 2 images of each row
-        const criticalImages = [
-          ...images.slice(0, Math.ceil(images.length / 3)).slice(0, firstBatchSize/3),
-          ...images.slice(Math.ceil(images.length / 3), Math.ceil(images.length / 3) * 2).slice(0, firstBatchSize/3),
-          ...images.slice(Math.ceil(images.length / 3) * 2).slice(0, firstBatchSize/3)
-        ];
-        
-        await Promise.all(criticalImages.map(img => preloadImage(img.image)));
-        setImagesPreloaded(true);
-      } catch (error) {
-        console.error("Error preloading images:", error);
-        setImagesPreloaded(true); // Continue anyway
-      }
-    };
-    
-    preloadCriticalImages();
-    
-    // Register intersection observer for lazy loading
-    if ('IntersectionObserver' in window) {
-      const lazyImageObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const lazyImage = entry.target;
-            if (lazyImage.dataset.src) {
-              lazyImage.src = lazyImage.dataset.src;
-              lazyImage.removeAttribute('data-src');
-              lazyImageObserver.unobserve(lazyImage);
-            }
-          }
-        });
-      });
-      
-      // Observe all lazy images
-      document.querySelectorAll('img[loading="lazy"]').forEach(img => {
-        lazyImageObserver.observe(img);
-      });
-      
-      return () => {
-        if (lazyImageObserver) {
-          lazyImageObserver.disconnect();
-        }
-      };
-    }
-  }, [images]);
-  
   // Split images into three rows for the marquee
   const firstRow = images.slice(0, Math.ceil(images.length / 3));
   const secondRow = images.slice(Math.ceil(images.length / 3), Math.ceil(images.length / 3) * 2);
@@ -329,7 +260,6 @@ const Gallery = ({
                 img={image.image} 
                 imgHeight={250}
                 imgWidth={350}
-                priority={index < 2} // Prioritize first 2 images
               />
             ))}
           </Marquee>
@@ -342,7 +272,6 @@ const Gallery = ({
                 img={image.image}
                 imgHeight={250}
                 imgWidth={350}
-                priority={index < 2} // Prioritize first 2 images
               />
             ))}
           </Marquee>
@@ -355,7 +284,6 @@ const Gallery = ({
                 img={image.image}
                 imgHeight={250}
                 imgWidth={350}
-                priority={index < 2} // Prioritize first 2 images
               />
             ))}
           </Marquee>
@@ -365,41 +293,41 @@ const Gallery = ({
   );
 };
 
-// Example usage with enhanced image data format
+// Example usage in a GalleryPage with PNG images instead of SVG
 export default function GalleryPage() {
   const galleryItems = [
     // First row (1-9)
-    { image: "/imgs/GalleryImg/1.svg" },
-    { image: "/imgs/GalleryImg/2.svg" },
-    { image: "/imgs/GalleryImg/3.svg" },
-    { image: "/imgs/GalleryImg/4.svg" },
-    { image: "/imgs/GalleryImg/5.svg" },
-    { image: "/imgs/GalleryImg/6.svg" },
-    { image: "/imgs/GalleryImg/7.svg" },
-    { image: "/imgs/GalleryImg/8.svg" },
-    { image: "/imgs/GalleryImg/9.svg" },
+    { image: "/imgs/GalleryImg/1.png" },
+    { image: "/imgs/GalleryImg/2.png" },
+    { image: "/imgs/GalleryImg/3.png" },
+    { image: "/imgs/GalleryImg/4.png" },
+    { image: "/imgs/GalleryImg/5.png" },
+    { image: "/imgs/GalleryImg/6.png" },
+    { image: "/imgs/GalleryImg/7.png" },
+    { image: "/imgs/GalleryImg/8.png" },
+    { image: "/imgs/GalleryImg/9.png" },
     
     // Second row (10-18)
-    { image: "/imgs/GalleryImg/10.svg" },
-    { image: "/imgs/GalleryImg/11.svg" },
-    { image: "/imgs/GalleryImg/12.svg" },
-    { image: "/imgs/GalleryImg/13.svg" },
-    { image: "/imgs/GalleryImg/14.svg" },
-    { image: "/imgs/GalleryImg/15.svg" },
-    { image: "/imgs/GalleryImg/16.svg" },
-    { image: "/imgs/GalleryImg/17.svg" },
-    { image: "/imgs/GalleryImg/18.svg" },
+    { image: "/imgs/GalleryImg/10.png" },
+    { image: "/imgs/GalleryImg/11.png" },
+    { image: "/imgs/GalleryImg/12.png" },
+    { image: "/imgs/GalleryImg/13.png" },
+    { image: "/imgs/GalleryImg/14.png" },
+    { image: "/imgs/GalleryImg/15.png" },
+    { image: "/imgs/GalleryImg/16.png" },
+    { image: "/imgs/GalleryImg/17.png" },
+    { image: "/imgs/GalleryImg/18.png" },
     
     // Third row (19-27)
-    { image: "/imgs/GalleryImg/19.svg" },
-    { image: "/imgs/GalleryImg/20.svg" },
-    { image: "/imgs/GalleryImg/21.svg" },
-    { image: "/imgs/GalleryImg/22.svg" },
-    { image: "/imgs/GalleryImg/23.svg" },
-    { image: "/imgs/GalleryImg/24.svg" },
-    { image: "/imgs/GalleryImg/25.svg" },
-    { image: "/imgs/GalleryImg/26.svg" },
-    { image: "/imgs/GalleryImg/27.svg" }
+    { image: "/imgs/GalleryImg/19.png" },
+    { image: "/imgs/GalleryImg/20.png" },
+    { image: "/imgs/GalleryImg/21.png" },
+    { image: "/imgs/GalleryImg/22.png" },
+    { image: "/imgs/GalleryImg/23.png" },
+    { image: "/imgs/GalleryImg/24.png" },
+    { image: "/imgs/GalleryImg/25.png" },
+    { image: "/imgs/GalleryImg/26.png" },
+    { image: "/imgs/GalleryImg/27.png" }
   ];
 
   return (
