@@ -50,7 +50,7 @@ const SportikaHero = () => {
           {/* Image Container */}
           <div className="w-full md:w-1/2 flex justify-center">
             <img
-              src="/imgs/AboutGS/1.svg"
+              src="/imgs/AboutGS/3.png"
               alt="About GITAM"
               className="max-w-full h-auto object-cover"
             />
