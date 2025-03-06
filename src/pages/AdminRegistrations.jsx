@@ -21,7 +21,7 @@ const AdminRegistrations = () => {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   // Admin email list
-  const ADMIN_EMAILS = import.meta.env.VITE_FIREBASE_ADMIN_EMAIL.split(',');
+  const ADMIN_EMAILS = ['bgangadh2@gitam.edu','pkoola@gitam.in','vagrawal@gitam.in'];
 
   // List of sports
   const sports = [
