@@ -20,7 +20,7 @@ const SportikaFaqs = () => {
     {
       icon: <RiTeamFill className="text-[#004740] text-xl" />,
       question: "How can I register for a Sportika event?",
-      answer: "Visit our website, click on \"Registration,\" and fill out the form. Complete the payment and send the following details to nammasportika@gmail.com:\n- Payment Screenshot\n- Game Name\n- Coach's Contact Number\n- Captain's Contact Number"
+      answer: "Visit our website <br /> <a href='https://namma-sportika.gitam.edu' target='_blank' rel='noopener noreferrer' class='text-[#a0ffff] hover:underline'>🔗namma-sportika.gitam.edu</a><br />Click on <a href='https://namma-sportika.gitam.edu/registration' target='_blank' rel='noopener noreferrer' class='text-[#a0ffff] hover:underline'>Registration</a>, fill out the Form and complete the payment."
     },
     {
       icon: <FaRegListAlt className="text-[#004740] text-xl" />,

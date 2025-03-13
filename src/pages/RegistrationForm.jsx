@@ -1,4 +1,21 @@
-import React, { useState } from 'react';
+const styles = `
+@keyframes marquee {
+  0% {
+      transform: translateX(0%);
+  }
+  100% {
+      transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  display: inline-block;
+  white-space: nowrap;
+    animation: marquee 20s linear infinite;
+}
+`;
+
+import React, { useState, useEffect } from 'react';
 import {
   AlertCircle,
   CheckCircle2,
@@ -6,9 +23,10 @@ import {
   Phone,
   Mail,
   User,
-  Upload,
-  CreditCard,
-  Users
+  Users,
+  Clock,
+  Info,
+  X
 } from 'lucide-react';
 import { Alert, AlertDescription } from '../components/ui/alert';
 import { Card, CardContent } from "../components/ui/card";
@@ -50,6 +68,19 @@ const RegistrationForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showPopup, setShowPopup] = useState(true);
+
+  // Show popup on page load
+  useEffect(() => {
+    setShowPopup(true);
+    
+    // Auto-hide popup after 8 seconds
+    const timer = setTimeout(() => {
+      setShowPopup(false);
+    }, 8000);
+    
+    return () => clearTimeout(timer);
+  }, []);
 
   const validateForm = () => {
     const newErrors = {};
@@ -147,20 +178,6 @@ const RegistrationForm = () => {
     }
   };
 
-  const handleFileChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setFormData(prev => ({
-        ...prev,
-        paymentFile: file
-      }));
-      setFileName(file.name);
-      if (errors.paymentFile) {
-        setErrors(prev => ({ ...prev, paymentFile: '' }));
-      }
-    }
-  };
-
   const handleReset = () => {
     setFormData({
       name: '',
@@ -173,15 +190,48 @@ const RegistrationForm = () => {
       sport: '',
       paymentStatus: 'Paid'
     });
-    setFileName('');
     setErrors({});
     setSubmitStatus(null);
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#f4e4c9] flex flex-col p-3 sm:p-6 md:p-8">
+    <div className="min-h-screen w-full bg-[#f4e4c9] flex flex-col p-3 sm:p-6 md:p-8 relative">
+      <style>{styles}</style>
+
+      {/* Popup for Gitam Students */}
+      {showPopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
+          <div className="bg-[#e7fefe] rounded-lg shadow-xl max-w-md w-full border-2 border-[#a58255] overflow-hidden transform transition-all animate-fadeIn">
+            <div className="bg-[#07534c] p-4 flex justify-between items-center">
+              <h3 className="text-[#e7fefe] font-bold text-lg flex items-center">
+                <Info className="mr-2 h-5 w-5" /> Important Notice
+              </h3>
+              <button 
+                onClick={() => setShowPopup(false)}
+                className="text-[#e7fefe] hover:text-[#a58255] transition-colors"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <div className="p-6 text-center">
+              <div className="text-lg font-bold text-[#07534c] mb-3">
+              Registration is free for
+             <br /> 
+             GITAM STUDENTS
+              </div>
+              <Button
+                onClick={() => setShowPopup(false)}
+                className="bg-[#a58255] hover:bg-[#9b774a] text-[#e7fefe] font-semibold px-6 py-2 rounded-lg transition-all duration-200"
+              >
+                Got it, thanks!
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Page Heading */}
-      <div className="w-full flex items-center justify-center my-4 sm:my-8 md:my-12">
+      <div className="w-full flex items-center justify-center my-4 sm:my-8 md:my-10">
         <div className="relative flex items-center w-full max-w-4xl px-2 sm:px-4">
           <div className="flex-grow h-[2px] bg-gradient-to-r from-transparent to-[#004740]"></div>
           <h1 className="mx-2 sm:mx-8 text-xl sm:text-2xl md:text-4xl font-bold text-[#004740] text-center whitespace-nowrap">
@@ -190,25 +240,34 @@ const RegistrationForm = () => {
           <div className="flex-grow h-[2px] bg-gradient-to-r from-[#004740] to-transparent"></div>
         </div>
       </div>
-      <Card className="w-full max-w-2xl mx-auto shadow-xl rounded-2xl overflow-hidden border-2 border-[#a58255]">
+
+      <Card className="w-full max-w-2xl mx-auto shadow-xl rounded-2xl overflow-hidden border-2 border-[#a58255] transform transition-all hover:shadow-2xl">
         <CardContent className="p-3 sm:p-6 md:p-8 bg-[#07534c]">
-          {submitStatus === 'success' && (
-            <Alert className="mb-4 sm:mb-6 bg-[#a58255]/20 border border-[#a58255] text-[#e7fefe]">
-              <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-[#a58255]" />
-              <AlertDescription className="ml-2 text-xs sm:text-sm">
-                Thank you! Your registration has been submitted successfully.
-              </AlertDescription>
-            </Alert>
-          )}
-          {submitStatus === 'error' && (
-            <Alert className="mb-4 sm:mb-6 bg-red-100/20 border border-red-300 text-[#e7fefe]">
-              <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-red-300" />
-              <AlertDescription className="ml-2 text-xs sm:text-sm">
-                There was an error submitting your registration. Please try again.
-              </AlertDescription>
-            </Alert>
-          )}
           <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+            {/* Running Marquee Banner */}
+            <div className="sticky top-0 z-40 w-full bg-[#07534c] shadow-md border-b-2 border-[#a58255] mb-4">
+              <div className="overflow-hidden">
+                <div className="animate-marquee whitespace-nowrap py-2">
+                  <div className="inline-flex items-center text-[#e7fefe] font-semibold">
+                    <Clock className="h-4 w-4 mr-2 text-[#a58255]" />
+                    <span>⏱️ LAST DATE TO REGISTER IS 21st MARCH 2025 ⏱️</span>
+                    <span className="mx-8">|</span>
+                    <Clock className="h-4 w-4 mr-2 text-[#a58255]" />
+                    <span>⏱️ LAST DATE TO REGISTER IS 21st MARCH 2025 ⏱️</span>
+                    <span className="mx-8">|</span>
+                    <Clock className="h-4 w-4 mr-2 text-[#a58255]" />
+                    <span>⏱️ LAST DATE TO REGISTER IS 21st MARCH 2025 ⏱️</span>
+                    <span className="mx-8">|</span>
+                    <Clock className="h-4 w-4 mr-2 text-[#a58255]" />
+                    <span>⏱️ LAST DATE TO REGISTER IS 21st MARCH 2025 ⏱️</span>
+                    <span className="mx-8">|</span>
+                    <Clock className="h-4 w-4 mr-2 text-[#a58255]" />
+                    <span>⏱️ LAST DATE TO REGISTER IS 21st MARCH 2025 ⏱️</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* Name Field */}
             <div>
               <Label htmlFor="name" className="text-xs sm:text-sm font-medium text-[#e7fefe] mb-1 sm:mb-2 inline-block">
@@ -224,7 +283,7 @@ const RegistrationForm = () => {
                   onChange={handleChange}
                   className={`pl-8 sm:pl-10 pr-8 sm:pr-10 py-2 sm:py-3 rounded-lg bg-[#07534c]/90 border-2 text-sm ${
                     errors.name ? 'border-red-400' : 'border-[#a58255]/30'
-                  } text-[#e7fefe] placeholder-[#e7fefe]/60 focus:ring-2 focus:ring-[#a58255]`}
+                  } text-[#e7fefe] placeholder-[#e7fefe]/60 focus:ring-2 focus:ring-[#a58255] transition-all`}
                 />
                 <User className="h-4 w-4 sm:h-5 sm:w-5 text-[#e7fefe]/60 absolute left-2 sm:left-3 top-2.5 sm:top-3.5" />
                 {errors.name && (
@@ -240,7 +299,7 @@ const RegistrationForm = () => {
               )}
             </div>
             
-            {/* Email Field (Moved under Name Field) */}
+            {/* Email Field */}
             <div>
               <Label htmlFor="email" className="text-xs sm:text-sm font-medium text-[#e7fefe] mb-1 sm:mb-2 inline-block">
                 Email <span className="text-red-400">*</span>
@@ -255,7 +314,7 @@ const RegistrationForm = () => {
                   onChange={handleChange}
                   className={`pl-8 sm:pl-10 pr-8 sm:pr-10 py-2 sm:py-3 rounded-lg bg-[#07534c]/90 border-2 text-sm ${
                     errors.email ? 'border-red-400' : 'border-[#a58255]/30'
-                  } text-[#e7fefe] placeholder-[#e7fefe]/60 focus:ring-2 focus:ring-[#a58255]`}
+                  } text-[#e7fefe] placeholder-[#e7fefe]/60 focus:ring-2 focus:ring-[#a58255] transition-all`}
                 />
                 <Mail className="h-4 w-4 sm:h-5 sm:w-5 text-[#e7fefe]/60 absolute left-2 sm:left-3 top-2.5 sm:top-3.5" />
                 {errors.email && (
@@ -286,7 +345,7 @@ const RegistrationForm = () => {
                   onChange={handleChange}
                   className={`pl-8 sm:pl-10 pr-8 sm:pr-10 py-2 sm:py-3 rounded-lg bg-[#07534c]/90 border-2 text-sm ${
                     errors.university ? 'border-red-400' : 'border-[#a58255]/30'
-                  } text-[#e7fefe] placeholder-[#e7fefe]/60 focus:ring-2 focus:ring-[#a58255]`}
+                  } text-[#e7fefe] placeholder-[#e7fefe]/60 focus:ring-2 focus:ring-[#a58255] transition-all`}
                 />
                 <Users className="h-4 w-4 sm:h-5 sm:w-5 text-[#e7fefe]/60 absolute left-2 sm:left-3 top-2.5 sm:top-3.5" />
                 {errors.university && (
@@ -319,7 +378,7 @@ const RegistrationForm = () => {
                     onChange={handleChange}
                     className={`pl-8 sm:pl-10 pr-8 sm:pr-10 py-2 sm:py-3 rounded-lg bg-[#07534c]/90 border-2 text-sm ${
                       errors.captainName ? 'border-red-400' : 'border-[#a58255]/30'
-                    } text-[#e7fefe] placeholder-[#e7fefe]/60 focus:ring-2 focus:ring-[#a58255]`}
+                    } text-[#e7fefe] placeholder-[#e7fefe]/60 focus:ring-2 focus:ring-[#a58255] transition-all`}
                   />
                   <User className="h-4 w-4 sm:h-5 sm:w-5 text-[#e7fefe]/60 absolute left-2 sm:left-3 top-2.5 sm:top-3.5" />
                   {errors.captainName && (
@@ -350,7 +409,7 @@ const RegistrationForm = () => {
                     onChange={handleChange}
                     className={`pl-8 sm:pl-10 pr-8 sm:pr-10 py-2 sm:py-3 rounded-lg bg-[#07534c]/90 border-2 text-sm ${
                       errors.captainMobile ? 'border-red-400' : 'border-[#a58255]/30'
-                    } text-[#e7fefe] placeholder-[#e7fefe]/60 focus:ring-2 focus:ring-[#a58255]`}
+                    } text-[#e7fefe] placeholder-[#e7fefe]/60 focus:ring-2 focus:ring-[#a58255] transition-all`}
                   />
                   <Phone className="h-4 w-4 sm:h-5 sm:w-5 text-[#e7fefe]/60 absolute left-2 sm:left-3 top-2.5 sm:top-3.5" />
                   {errors.captainMobile && (
@@ -384,7 +443,7 @@ const RegistrationForm = () => {
                     onChange={handleChange}
                     className={`pl-8 sm:pl-10 pr-8 sm:pr-10 py-2 sm:py-3 rounded-lg bg-[#07534c]/90 border-2 text-sm ${
                       errors.coachName ? 'border-red-400' : 'border-[#a58255]/30'
-                    } text-[#e7fefe] placeholder-[#e7fefe]/60 focus:ring-2 focus:ring-[#a58255]`}
+                    } text-[#e7fefe] placeholder-[#e7fefe]/60 focus:ring-2 focus:ring-[#a58255] transition-all`}
                   />
                   <User className="h-4 w-4 sm:h-5 sm:w-5 text-[#e7fefe]/60 absolute left-2 sm:left-3 top-2.5 sm:top-3.5" />
                   {errors.coachName && (
@@ -415,7 +474,7 @@ const RegistrationForm = () => {
                     onChange={handleChange}
                     className={`pl-8 sm:pl-10 pr-8 sm:pr-10 py-2 sm:py-3 rounded-lg bg-[#07534c]/90 border-2 text-sm ${
                       errors.coachMobile ? 'border-red-400' : 'border-[#a58255]/30'
-                    } text-[#e7fefe] placeholder-[#e7fefe]/60 focus:ring-2 focus:ring-[#a58255]`}
+                    } text-[#e7fefe] placeholder-[#e7fefe]/60 focus:ring-2 focus:ring-[#a58255] transition-all`}
                   />
                   <Phone className="h-4 w-4 sm:h-5 sm:w-5 text-[#e7fefe]/60 absolute left-2 sm:left-3 top-2.5 sm:top-3.5" />
                   {errors.coachMobile && (
@@ -445,7 +504,7 @@ const RegistrationForm = () => {
                   onChange={handleChange}
                   className={`w-full pl-3 sm:pl-4 pr-8 sm:pr-10 py-2 sm:py-3 rounded-lg appearance-none bg-[#07534c]/90 border-2 text-sm ${
                     errors.sport ? 'border-red-400' : 'border-[#a58255]/30'
-                  } text-[#e7fefe] focus:ring-2 focus:ring-[#a58255]`}
+                  } text-[#e7fefe] focus:ring-2 focus:ring-[#a58255] transition-all`}
                 >
                   <option value="" className="bg-[#07534c]">Select sport</option>
                   {sportOptions.map((sport, index) => (
@@ -461,8 +520,8 @@ const RegistrationForm = () => {
               )}
             </div>
 
-            {/* Payment Link (Static) */}
-            <div>
+            {/* Payment Link */}
+            <div className="bg-[#a58255]/20 p-3 sm:p-4 rounded-lg border border-[#a58255]/30 transition-all hover:bg-[#a58255]/30">
               <Label className="text-xs sm:text-sm font-medium text-[#e7fefe] mb-1 sm:mb-2 inline-block">
                 Payment link <span className="text-red-400">*</span>
               </Label>
@@ -471,7 +530,7 @@ const RegistrationForm = () => {
                   href="https://gevents.gitam.edu/registration/Mzg4Mw..." 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-xs sm:text-sm text-[#6c7cf5] underline hover:text-[#c9a574] font-medium break-all"
+                  className="text-xs sm:text-sm text-[#6c7cf5] underline hover:text-[#c9a574] font-medium break-all transition-colors"
                 >
                   https://gevents.gitam.edu/registration/Mzg4Mw...
                 </a>
@@ -479,14 +538,17 @@ const RegistrationForm = () => {
             </div>
 
             {/* WhatsApp Community */}
-            <div className="bg-[#a58255]/20 p-2 sm:p-4 rounded-lg border border-[#a58255]/30">
-              <h3 className="text-[#e7fefe] font-medium text-xs sm:text-sm mb-1 sm:mb-2">Join The WhatsApp Community</h3>
+            <div className="bg-[#a58255]/20 p-3 sm:p-4 rounded-lg border border-[#a58255]/30 transition-all hover:bg-[#a58255]/30">
+              <h3 className="text-[#e7fefe] font-medium text-xs sm:text-sm mb-2 flex items-center">
+                <Users className="h-4 w-4 mr-2 text-[#a58255]" />
+                Join The WhatsApp Community
+              </h3>
               <p className="text-[#e7fefe]/80 text-xs mb-1 sm:mb-2 break-all">
                 <a 
                   href="https://chat.whatsapp.com/BrB8LpD84cz7Aepko7zvmZ" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-xs sm:text-sm text-[#6c7cf5] underline hover:text-[#c9a574] font-medium break-all"
+                  className="text-xs sm:text-sm text-[#6c7cf5] underline hover:text-[#c9a574] font-medium break-all transition-colors"
                 >
                   https://chat.whatsapp.com/BrB8LpD84cz7Aepko7zvmZ
                 </a>
@@ -516,10 +578,30 @@ const RegistrationForm = () => {
                 {loading ? 'Submitting...' : 'Submit'}
               </Button>
             </div>
+
+            {/* Success Message */}
+            {submitStatus === 'success' && (
+            <Alert className="mb-4 sm:mb-6 bg-[#a58255]/20 border border-[#a58255] text-[#e7fefe]">
+              <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-[#a58255]" />
+              <AlertDescription className="ml-2 text-xs sm:text-sm">
+                Thank you! Your registration has been submitted successfully.
+              </AlertDescription>
+            </Alert>
+          )}
+          {submitStatus === 'error' && (
+            <Alert className="mb-4 sm:mb-6 bg-red-100/20 border border-red-300 text-[#e7fefe]">
+              <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-red-300" />
+              <AlertDescription className="ml-2 text-xs sm:text-sm">
+                There was an error submitting your registration. Please try again.
+              </AlertDescription>
+            </Alert>
+          )}
+
+            {/* Privacy Notice */}
+            <p className="text-xs font-medium text-[#e7fefe]/60 text-center mt-3 sm:mt-6">
+              Your information is secure and will only be used for event registration purposes.
+            </p>
           </form>
-          <p className="text-xs font-medium text-[#e7fefe]/60 text-center mt-3 sm:mt-6">
-            Your information is secure and will only be used for event registration purposes.
-          </p>
         </CardContent>
       </Card>
     </div>
