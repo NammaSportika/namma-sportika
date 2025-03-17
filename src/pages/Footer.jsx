@@ -43,7 +43,7 @@ const Footer = () => {
           <FooterSection title="Quick Access" delay={0.2}>
             <ul className="flex flex-col items-center space-y-4 w-full">
               {[
-                { name: 'Brochure', file: 'namma Sportika Sponsorship Brochure.pdf' },
+                // { name: 'Brochure', file: 'namma Sportika Sponsorship Brochure.pdf' },
                 { name: 'Info Poster', file: 'NammaSportika_InfoPoster.pdf' },
                 { name: 'Rulebook', file: 'namma Sportika Rule Book  STD.pdf' },
                 { name: 'Registration', isLink: true }
