@@ -1,20 +1,3 @@
-const styles = `
-@keyframes marquee {
-  0% {
-      transform: translateX(0%);
-  }
-  100% {
-      transform: translateX(-100%);
-  }
-}
-
-.animate-marquee {
-  display: inline-block;
-  white-space: nowrap;
-    animation: marquee 20s linear infinite;
-}
-`;
-
 import React, { useState, useEffect } from 'react';
 import {
   AlertCircle,
@@ -36,7 +19,57 @@ import { Label } from '../components/ui/label';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
 
+// MarqueeBanner Component
+const MarqueeBanner = ({ message = "LAST DATE TO REGISTER IS 21st MARCH 2025", repeatCount = 5 }) => {
+  const items = Array(repeatCount).fill(null);
+  
+  return (
+    <div className="w-full bg-[#07534c] shadow-md border-b-2 border-[#a58255] mb-4">
+      <div className="relative flex overflow-x-hidden">
+        <div className="animate-marquee whitespace-nowrap py-2 flex">
+          {items.map((_, index) => (
+            <div key={`item-${index}`} className="flex items-center text-[#e7fefe] font-semibold">
+              <Clock className="h-4 w-4 mr-2 text-[#a58255]" />
+              <span>⏱️ {message} ⏱️</span>
+              <span className="mx-8">|</span>
+            </div>
+          ))}
+        </div>
+        {/* Duplicate for seamless looping */}
+        <div className="absolute top-0 animate-marquee2 whitespace-nowrap py-2 flex">
+          {items.map((_, index) => (
+            <div key={`duplicate-${index}`} className="flex items-center text-[#e7fefe] font-semibold">
+              <Clock className="h-4 w-4 mr-2 text-[#a58255]" />
+              <span>⏱️ {message} ⏱️</span>
+              <span className="mx-8">|</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// RegistrationForm Component
 const RegistrationForm = () => {  
+  // Custom marquee animation styles
+  const styles = `
+    @keyframes marquee {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-100%); }
+    }
+    @keyframes marquee2 {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(0%); }
+    }
+    .animate-marquee {
+      animation: marquee 25s linear infinite;
+    }
+    .animate-marquee2 {
+      animation: marquee2 25s linear infinite;
+    }
+  `;
+
   // Sports options with fee details
   const sportOptions = [
     "Athletics - 100m - 500/-",
@@ -65,7 +98,6 @@ const RegistrationForm = () => {
   });
   const [errors, setErrors] = useState({});
   const [submitStatus, setSubmitStatus] = useState(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [showPopup, setShowPopup] = useState(true);
@@ -215,9 +247,9 @@ const RegistrationForm = () => {
             </div>
             <div className="p-6 text-center">
               <div className="text-lg font-bold text-[#07534c] mb-3">
-              Registration is free for
-             <br /> 
-             GITAM STUDENTS
+                Registration is free for
+                <br /> 
+                GITAM STUDENTS
               </div>
               <Button
                 onClick={() => setShowPopup(false)}
@@ -241,33 +273,12 @@ const RegistrationForm = () => {
         </div>
       </div>
 
+      {/* Marquee Banner */}
+      <MarqueeBanner message="LAST DATE TO REGISTER IS 22nd MARCH 2025" repeatCount={5} />
+
       <Card className="w-full max-w-2xl mx-auto shadow-xl rounded-2xl overflow-hidden border-2 border-[#a58255] transform transition-all hover:shadow-2xl">
         <CardContent className="p-3 sm:p-6 md:p-8 bg-[#07534c]">
           <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-            {/* Running Marquee Banner */}
-            <div className="sticky top-0 z-40 w-full bg-[#07534c] shadow-md border-b-2 border-[#a58255] mb-4">
-              <div className="overflow-hidden">
-                <div className="animate-marquee whitespace-nowrap py-2">
-                  <div className="inline-flex items-center text-[#e7fefe] font-semibold">
-                    <Clock className="h-4 w-4 mr-2 text-[#a58255]" />
-                    <span>⏱️ LAST DATE TO REGISTER IS 22nd MARCH 2025 ⏱️</span>
-                    <span className="mx-8">|</span>
-                    <Clock className="h-4 w-4 mr-2 text-[#a58255]" />
-                    <span>⏱️ LAST DATE TO REGISTER IS 21st MARCH 2025 ⏱️</span>
-                    <span className="mx-8">|</span>
-                    <Clock className="h-4 w-4 mr-2 text-[#a58255]" />
-                    <span>⏱️ LAST DATE TO REGISTER IS 21st MARCH 2025 ⏱️</span>
-                    <span className="mx-8">|</span>
-                    <Clock className="h-4 w-4 mr-2 text-[#a58255]" />
-                    <span>⏱️ LAST DATE TO REGISTER IS 21st MARCH 2025 ⏱️</span>
-                    <span className="mx-8">|</span>
-                    <Clock className="h-4 w-4 mr-2 text-[#a58255]" />
-                    <span>⏱️ LAST DATE TO REGISTER IS 21st MARCH 2025 ⏱️</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
             {/* Name Field */}
             <div>
               <Label htmlFor="name" className="text-xs sm:text-sm font-medium text-[#e7fefe] mb-1 sm:mb-2 inline-block">
@@ -579,23 +590,23 @@ const RegistrationForm = () => {
               </Button>
             </div>
 
-            {/* Success Message */}
+            {/* Success & Error Messages */}
             {submitStatus === 'success' && (
-            <Alert className="mb-4 sm:mb-6 bg-[#a58255]/20 border border-[#a58255] text-[#e7fefe]">
-              <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-[#a58255]" />
-              <AlertDescription className="ml-2 text-xs sm:text-sm">
-                Thank you! Your registration has been submitted successfully.
-              </AlertDescription>
-            </Alert>
-          )}
-          {submitStatus === 'error' && (
-            <Alert className="mb-4 sm:mb-6 bg-red-100/20 border border-red-300 text-[#e7fefe]">
-              <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-red-300" />
-              <AlertDescription className="ml-2 text-xs sm:text-sm">
-                There was an error submitting your registration. Please try again.
-              </AlertDescription>
-            </Alert>
-          )}
+              <Alert className="mb-4 sm:mb-6 bg-[#a58255]/20 border border-[#a58255] text-[#e7fefe]">
+                <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-[#a58255]" />
+                <AlertDescription className="ml-2 text-xs sm:text-sm">
+                  Thank you! Your registration has been submitted successfully.
+                </AlertDescription>
+              </Alert>
+            )}
+            {submitStatus === 'error' && (
+              <Alert className="mb-4 sm:mb-6 bg-red-100/20 border border-red-300 text-[#e7fefe]">
+                <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-red-300" />
+                <AlertDescription className="ml-2 text-xs sm:text-sm">
+                  There was an error submitting your registration. Please try again.
+                </AlertDescription>
+              </Alert>
+            )}
 
             {/* Privacy Notice */}
             <p className="text-xs font-medium text-[#e7fefe]/60 text-center mt-3 sm:mt-6">

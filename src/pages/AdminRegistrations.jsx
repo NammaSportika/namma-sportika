@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
-import { collection, query, orderBy, limit, getDocs, startAfter } from 'firebase/firestore';
+import { collection, query, orderBy, getDocs } from 'firebase/firestore';
 import { signInWithPopup, signOut } from 'firebase/auth';
 import { db, auth, provider } from '../firebase/config';
 import { FiDownload, FiLogOut, FiSearch, FiLock, FiMail, FiChevronLeft, FiChevronRight, FiFilter, FiFileText, FiAlertCircle, FiEye, FiCheckCircle, FiActivity, FiDatabase } from 'react-icons/fi';
@@ -12,13 +12,13 @@ const AdminRegistrations = () => {
   const [filterSport, setFilterSport] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [lastDoc, setLastDoc] = useState(null);
-  const [hasMore, setHasMore] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [lastActivity, setLastActivity] = useState(Date.now());
   const [loginError, setLoginError] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+  
+  // Pagination state (now for client-side pagination)
+  const [currentPage, setCurrentPage] = useState(1);
+  const [recordsPerPage, setRecordsPerPage] = useState(20);
 
   // Admin email list
   const ADMIN_EMAILS = ['bgangadh2@gitam.edu','pkoola@gitam.in','vagrawal@gitam.in'];
@@ -49,7 +49,7 @@ const AdminRegistrations = () => {
       
       if (ADMIN_EMAILS.includes(userEmail)) {
         setIsAuthenticated(true);
-        fetchRegistrations();
+        fetchAllRegistrations();
       } else {
         setLoginError('You are not authorized to access this page');
         await signOut(auth);
@@ -101,46 +101,21 @@ const AdminRegistrations = () => {
     }
   };
 
-  // Fetch registrations with pagination
-  const fetchRegistrations = async (page = 1) => {
+  // Fetch all registrations at once
+  const fetchAllRegistrations = async () => {
     try {
       setLoading(true);
       const registrationsRef = collection(db, 'registrations');
       
       // Base query with timestamp ordering
-      let queryConstraints = [orderBy('timestamp', 'desc')];
-
-      // Get total count for pagination
-      const countQuery = query(registrationsRef, ...queryConstraints);
-      const snapshot = await getDocs(countQuery);
-      const total = snapshot.size;
-      setTotalPages(Math.ceil(total / 20));
-
-      // Add pagination constraints
-      queryConstraints.push(limit(20));
+      const registrationsQuery = query(
+        registrationsRef,
+        orderBy('timestamp', 'desc')
+      );
       
-      if (page > 1) {
-        const previousPageQuery = query(
-          registrationsRef,
-          ...queryConstraints,
-          limit((page - 1) * 20)
-        );
-        const previousPageDocs = await getDocs(previousPageQuery);
-        const lastVisible = previousPageDocs.docs[previousPageDocs.docs.length - 1];
-        
-        if (lastVisible) {
-          queryConstraints.push(startAfter(lastVisible));
-        }
-      }
-
-      const finalQuery = query(registrationsRef, ...queryConstraints);
-      const querySnapshot = await getDocs(finalQuery);
-
-      if (querySnapshot.empty && page > 1) {
-        return fetchRegistrations(1);
-      }
-
-      const newRegistrations = querySnapshot.docs.map(doc => {
+      const querySnapshot = await getDocs(registrationsQuery);
+      
+      const allRegistrations = querySnapshot.docs.map(doc => {
         const data = doc.data();
         return {
           id: doc.id,
@@ -156,8 +131,8 @@ const AdminRegistrations = () => {
         };
       });
 
-      setRegistrations(newRegistrations);
-      setCurrentPage(page);
+      setRegistrations(allRegistrations);
+      setCurrentPage(1);
     } catch (error) {
       console.error('Error fetching registrations:', error);
     } finally {
@@ -165,19 +140,7 @@ const AdminRegistrations = () => {
     }
   };
 
-  // Navigation handlers
-  const handlePrevPage = async () => {
-    if (currentPage > 1) {
-      await fetchRegistrations(currentPage - 1);
-    }
-  };
-
-  const handleNextPage = async () => {
-    if (currentPage < totalPages) {
-      await fetchRegistrations(currentPage + 1);
-    }
-  };
-
+  // Setup authentication on initial load
   useEffect(() => {
     let unsubscribe;
     const setupAuth = async () => {
@@ -185,7 +148,7 @@ const AdminRegistrations = () => {
         try {
           if (user && ADMIN_EMAILS.includes(user.email)) {
             setIsAuthenticated(true);
-            await fetchRegistrations(1);
+            await fetchAllRegistrations();
           } else {
             setIsAuthenticated(false);
             setRegistrations([]);
@@ -205,15 +168,8 @@ const AdminRegistrations = () => {
     };
   }, []);
 
-  // Add useEffect to handle filter and search changes
-  useEffect(() => {
-    if (isAuthenticated) {
-      fetchRegistrations(1);
-    }
-  }, [filterSport]); // Re-fetch when filter changes
-
-  // Update the filtering logic
-  const getFilteredRegistrations = useCallback(() => {
+  // Filter and search in memory (optimized with useMemo)
+  const filteredRegistrations = useMemo(() => {
     return registrations.filter(reg => {
       // Sport filter - exact match
       const matchesSport = filterSport === 'All' || reg.sport === filterSport;
@@ -222,43 +178,62 @@ const AdminRegistrations = () => {
       if (!searchTerm) return matchesSport;
 
       const searchLower = searchTerm.toLowerCase();
-      const searchFields = [
-        reg.name,
-        reg.university,
-        reg.captainName,
-        reg.coachName,
-        reg.email,
-      ];
-
-      const matchesSearch = searchFields.some(
-        field => field && field.toLowerCase().includes(searchLower)
+      // Optimize by checking most common fields first
+      return (
+        matchesSport && (
+          (reg.name && reg.name.toLowerCase().includes(searchLower)) ||
+          (reg.university && reg.university.toLowerCase().includes(searchLower)) ||
+          (reg.captainName && reg.captainName.toLowerCase().includes(searchLower)) ||
+          (reg.coachName && reg.coachName.toLowerCase().includes(searchLower)) ||
+          (reg.email && reg.email.toLowerCase().includes(searchLower))
+        )
       );
-
-      return matchesSport && matchesSearch;
     });
   }, [registrations, filterSport, searchTerm]);
 
-  // Use the memoized filtered results
-  const filteredRegistrations = getFilteredRegistrations();
+  // Create paginated data for current view
+  const currentRecords = useMemo(() => {
+    const indexOfLastRecord = currentPage * recordsPerPage;
+    const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+    return filteredRegistrations.slice(indexOfFirstRecord, indexOfLastRecord);
+  }, [filteredRegistrations, currentPage, recordsPerPage]);
 
-  // Add debounced search
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (searchTerm) {
-        setCurrentPage(1); // Reset to first page when searching
-      }
-    }, 300);
+  // Calculate total pages
+  const totalPages = useMemo(() => {
+    return Math.ceil(filteredRegistrations.length / recordsPerPage);
+  }, [filteredRegistrations, recordsPerPage]);
 
-    return () => clearTimeout(timer);
-  }, [searchTerm]);
-
-  // Update the sport filter handler
-  const handleSportFilter = (sport) => {
-    setFilterSport(sport);
-    setCurrentPage(1); // Reset to first page when changing filters
+  // Navigation handlers
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
   };
 
-  // Handle Excel export
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  // Reset to first page when filter or search changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filterSport, searchTerm]);
+
+  // Handle sport filter change
+  const handleSportFilter = (sport) => {
+    setFilterSport(sport);
+  };
+
+  // Handle records per page change
+  const handleRecordsPerPageChange = (e) => {
+    const value = parseInt(e.target.value);
+    setRecordsPerPage(value);
+    setCurrentPage(1); // Reset to first page when changing display count
+  };
+
+  // Handle Excel export - export all filtered data
   const exportToExcel = () => {
     const dataToExport = filteredRegistrations.map(reg => ({
       'Name': reg.name || '',
@@ -295,9 +270,6 @@ const AdminRegistrations = () => {
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen w-full bg-[#f4e4c9] bg-gradient-to-b from-[#f4e4c9] to-[#e7d3b8] flex flex-col p-3 sm:p-6 md:p-8">
-        {/* Logo and Branding */}
-        
-
         {/* Page Heading */}
         <div className="w-full flex items-center justify-center mb-8">
           <div className="relative flex items-center w-full max-w-4xl px-2 sm:px-4">
@@ -376,7 +348,7 @@ const AdminRegistrations = () => {
 
   return (
     <section className="py-6 bg-[#F4E4CA] min-h-screen">
-      {/* Page Heading with Logout Button - Modified to put logout button on the right */}
+      {/* Page Heading with Logout Button */}
       <div className="w-full flex items-center justify-between my-4 md:my-8 px-4 container mx-auto max-w-7xl">
         <h1 className="text-2xl sm:text-4xl font-bold text-[#004740]">
           REGISTRATIONS DASHBOARD
@@ -393,7 +365,7 @@ const AdminRegistrations = () => {
       <div className="container mx-auto px-4">
         {/* Controls Section */}
         <div className="bg-white shadow-lg rounded-lg p-4 mb-6 border border-[#a58255]/20">
-          <div className="grid gap-4 md:grid-cols-4">
+          <div className="grid gap-4 md:grid-cols-5">
             {/* Filter by Sport */}
             <div>
               <label htmlFor="sportFilter" className="block text-sm font-medium text-[#004740] mb-1">
@@ -431,6 +403,25 @@ const AdminRegistrations = () => {
               </div>
             </div>
 
+            {/* Records Per Page */}
+            <div>
+              <label htmlFor="recordsPerPage" className="block text-sm font-medium text-[#004740] mb-1">
+                <FiEye className="inline mr-1" /> Records Per Page
+              </label>
+              <select
+                id="recordsPerPage"
+                value={recordsPerPage}
+                onChange={handleRecordsPerPageChange}
+                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#07534c]"
+              >
+                <option value={20}>20 Records</option>
+                <option value={50}>50 Records</option>
+                <option value={100}>100 Records</option>
+                <option value={200}>200 Records</option>
+                <option value={filteredRegistrations.length}>All Records</option>
+              </select>
+            </div>
+
             {/* Export Button */}
             <div className="flex items-end">
               <button
@@ -452,11 +443,14 @@ const AdminRegistrations = () => {
                 <FiActivity className="mr-2 text-[#a58255]" />
                 {filteredRegistrations.length}
               </div>
+              <div className="text-xs text-gray-300 mt-1">
+                Showing page {currentPage} of {totalPages || 1}
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Data Table - Changed text color to black */}
+        {/* Data Table */}
         <div className="bg-white shadow-lg rounded-lg overflow-hidden border border-[#a58255]/20">
           <div className="px-4 py-3 bg-[#07534c]/10 border-b border-[#07534c]/20">
             <div className="flex items-center text-[#004740] font-medium">
@@ -478,8 +472,8 @@ const AdminRegistrations = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {filteredRegistrations.length > 0 ? (
-                  filteredRegistrations.map((reg) => (
+                {currentRecords.length > 0 ? (
+                  currentRecords.map((reg) => (
                     <tr key={reg.id} className="hover:bg-gray-50 transition-colors">
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-black">{reg.name || '-'}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-black">{reg.university || '-'}</td>
@@ -520,14 +514,14 @@ const AdminRegistrations = () => {
         <div className="flex items-center bg-white px-4 py-2 rounded-md shadow-md border border-[#a58255]/20">
           <span className="text-[#004740] font-medium flex items-center">
             <FiCheckCircle className="text-[#a58255] mr-2" />
-            Page {currentPage} of {totalPages}
+            Page {currentPage} of {totalPages || 1}
           </span>
         </div>
         <button
           onClick={handleNextPage}
-          disabled={currentPage === totalPages}
+          disabled={currentPage === totalPages || totalPages === 0}
           className={`bg-[#07534c] text-white font-medium py-2 px-4 rounded-md transition duration-300 flex items-center ${
-            currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#004740] hover:shadow-md'
+            currentPage === totalPages || totalPages === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#004740] hover:shadow-md'
           }`}
         >
           Next <FiChevronRight className="ml-1" />
