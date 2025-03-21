@@ -250,7 +250,7 @@ const RegistrationForm = () => {
                 <div className="animate-marquee whitespace-nowrap py-2">
                   <div className="inline-flex items-center text-[#e7fefe] font-semibold">
                     <Clock className="h-4 w-4 mr-2 text-[#a58255]" />
-                    <span>⏱️ LAST DATE TO REGISTER IS 21st MARCH 2025 ⏱️</span>
+                    <span>⏱️ LAST DATE TO REGISTER IS 22nd MARCH 2025 ⏱️</span>
                     <span className="mx-8">|</span>
                     <Clock className="h-4 w-4 mr-2 text-[#a58255]" />
                     <span>⏱️ LAST DATE TO REGISTER IS 21st MARCH 2025 ⏱️</span>
