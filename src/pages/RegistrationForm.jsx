@@ -20,7 +20,7 @@ import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
 
 // MarqueeBanner Component
-const MarqueeBanner = ({ message = "LAST DATE TO REGISTER IS 21st MARCH 2025", repeatCount = 5 }) => {
+const MarqueeBanner = ({ message = "LAST DATE TO REGISTER IS 25th MARCH 2025", repeatCount = 5 }) => {
   const items = Array(repeatCount).fill(null);
   
   return (
@@ -274,7 +274,7 @@ const RegistrationForm = () => {
       </div>
 
       {/* Marquee Banner */}
-      <MarqueeBanner message="LAST DATE TO REGISTER IS 22nd MARCH 2025" repeatCount={5} />
+      <MarqueeBanner message="LAST DATE TO REGISTER IS 25th MARCH 2025" repeatCount={5} />
 
       <Card className="w-full max-w-2xl mx-auto shadow-xl rounded-2xl overflow-hidden border-2 border-[#a58255] transform transition-all hover:shadow-2xl">
         <CardContent className="p-3 sm:p-6 md:p-8 bg-[#07534c]">
