@@ -21,7 +21,7 @@ import RegistrationForm from './pages/RegistrationForm';
 import AdminRegistrations from './pages/AdminRegistrations';
 import FeedbackForm from './pages/FeedbackForm';
 import AdminFeedback from './pages/AdminFeedback';
-
+import RegistrationClosedPage from './pages/RegistrationClosedPage';
 const AppContent = () => {
   const location = useLocation();
   const isLandingPage = location.pathname === '/';
@@ -48,7 +48,7 @@ const AppContent = () => {
           <Route path="/events/kabaddi" element={<KabaddiPage />} />
           <Route path="/events/throwball" element={<ThrowballPage />} />
           <Route path="/events/volleyball" element={<VolleyballPage />} />
-          <Route path="/registration" element={<RegistrationForm />} />
+          <Route path="/registration" element={<RegistrationClosedPage  />} />
           <Route path="/admin-registrations" element={<AdminRegistrations />} />
           <Route path="/admin-feedback" element={<AdminFeedback />} />
           {/* <Route path='/feedback' element={<FeedbackForm />} /> */}
