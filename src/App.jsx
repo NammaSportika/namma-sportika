@@ -22,6 +22,7 @@ import AdminRegistrations from './pages/AdminRegistrations';
 import FeedbackForm from './pages/FeedbackForm';
 import AdminFeedback from './pages/AdminFeedback';
 import RegistrationClosedPage from './pages/RegistrationClosedPage';
+import CricketScore from './pages/ScoreBoard/CricketScore';
 const AppContent = () => {
   const location = useLocation();
   const isLandingPage = location.pathname === '/';
@@ -52,6 +53,9 @@ const AppContent = () => {
           <Route path="/admin-registrations" element={<AdminRegistrations />} />
           <Route path="/admin-feedback" element={<AdminFeedback />} />
           {/* <Route path='/feedback' element={<FeedbackForm />} /> */}
+
+          {/* <Route path="/score-board" element={<CricketScore />} /> */}
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
