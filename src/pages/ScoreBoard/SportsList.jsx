@@ -47,7 +47,7 @@ const SportsList = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2, delay: index * 0.1 }}
-              className={index === 6 ? 'col-span-2' : ''}
+              className={index === 2 ? 'col-span-2' : ''}
             >
               <Link to={sport.route} className="block">
                 <div className="bg-gradient-to-br from-[#07534c] to-[#05433d] rounded-xl shadow-md hover:shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1">
