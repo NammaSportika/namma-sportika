@@ -41,6 +41,7 @@ const LandingPageNavbar = ({ user, handleLogout }) => {
     { to: '/', label: 'Home', onClick: () => navigate('/') },
     { to: '/about', label: 'About', onClick: () => navigate('/about') },
     { to: '/events', label: 'Events', onClick: () => navigate('/events') },
+    { to: '/scoreboard', label: 'Scoreboard', onClick: () => navigate('/scores') },
     { to: '/registration', label: 'Registration', onClick: () => navigate('/registration') },
     { to: '/gallery', label: 'Gallery', onClick: () => navigate('/gallery') },
     { to: '/contact', label: 'Contact', onClick: () => navigate('/contact') },
