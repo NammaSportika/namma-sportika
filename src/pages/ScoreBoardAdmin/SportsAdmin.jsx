@@ -63,8 +63,8 @@ const SPORTS = [
   { 
     id: 'chess', 
     name: 'Chess', 
-    type: 'individual', 
-    attributes: ['Rank', 'Name', 'Score'],
+    type: 'team', 
+    attributes: ['Team 1', 'Team 2', 'Score', 'Winner', 'Match Number', 'Match Type'],
     icon: 'CheckSquare'
   },
   { 
