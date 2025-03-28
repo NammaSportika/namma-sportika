@@ -94,31 +94,6 @@ const FootballMatchCard = ({ match, index }) => {
                 </div>
               </div>
             )}
-
-            {/* Match Metadata */}
-            <div className="w-full mt-4">
-              <div className="flex justify-around rounded-lg bg-[#07534c] p-3 shadow-inner">
-                <div className="flex items-center gap-2 text-[#e7fefe]">
-                  <div className="rounded-lg bg-[#a58255] p-2">
-                    <Calendar className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-bold uppercase tracking-wider">Date</p>
-                    <p className="text-sm font-semibold">{match.date}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2 text-[#e7fefe]">
-                  <div className="rounded-lg bg-[#a58255] p-2">
-                    <MapPin className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-bold uppercase tracking-wider">Venue</p>
-                    <p className="text-sm font-semibold">{match.ground}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </motion.div>
