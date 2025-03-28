@@ -3,18 +3,18 @@ import { Calendar, Clock, MapPin, Trophy, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { fetchScores } from '../../pages/ScoreBoardAdmin/firebaseUtils';
 
-const CricketMatchCard = ({ match, index }) => {
+const ThrowballMatchCard = ({ match, index }) => {
   // Determine the match title based on matchType
   const matchTitle = match.matchType 
-    ? `${match.matchType}` 
-    : 'Cricket';
+    ? `Throwball Men's ${match.matchType}` 
+    : 'Throwball Men\'s';
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: index * 0.1 }}
-      className="relative w-full max-w-2xl mx-auto mb-6 px-4"
+      className="relative w-full max-w-2xl mx-auto mb-6 px-4 min-h-screen"
     >
       {/* Main Card */}
       <motion.div
@@ -52,9 +52,6 @@ const CricketMatchCard = ({ match, index }) => {
                 </h2>
                 <div className="w-full rounded-lg bg-[#a58255]/20 p-2 text-center">
                   <p className="text-xl md:text-3xl font-black text-[#e7fefe]">{match.team1?.score}</p>
-                  {match.team1?.overs && (
-                    <p className="text-sm text-[#e7fefe] mt-1">({match.team1.overs} overs)</p>
-                  )}
                 </div>
               </div>
 
@@ -84,9 +81,6 @@ const CricketMatchCard = ({ match, index }) => {
                 </h2>
                 <div className="w-full rounded-lg bg-[#a58255]/20 p-2 text-center">
                   <p className="text-xl md:text-3xl font-black text-[#e7fefe]">{match.team2?.score}</p>
-                  {match.team2?.overs && (
-                    <p className="text-sm text-[#e7fefe] mt-1">({match.team2.overs} overs)</p>
-                  )}
                 </div>
               </div>
             </div>
@@ -100,6 +94,31 @@ const CricketMatchCard = ({ match, index }) => {
                 </div>
               </div>
             )}
+
+            {/* Match Metadata */}
+            <div className="w-full mt-4">
+              <div className="flex justify-around rounded-lg bg-[#07534c] p-3 shadow-inner">
+                <div className="flex items-center gap-2 text-[#e7fefe]">
+                  <div className="rounded-lg bg-[#a58255] p-2">
+                    <Calendar className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-wider">Date</p>
+                    <p className="text-sm font-semibold">{match.date}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 text-[#e7fefe]">
+                  <div className="rounded-lg bg-[#a58255] p-2">
+                    <MapPin className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-wider">Venue</p>
+                    <p className="text-sm font-semibold">{match.ground}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </motion.div>
@@ -107,7 +126,7 @@ const CricketMatchCard = ({ match, index }) => {
   );
 };
 
-const CricketScore = () => {
+const ThrowballScoreMen = () => {
   const [matches, setMatches] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -116,8 +135,8 @@ const CricketScore = () => {
     const getMatches = async () => {
       try {
         setLoading(true);
-        // Fetch cricket matches from Firebase
-        const scores = await fetchScores('cricket');
+        // Fetch throwball matches from Firebase
+        const scores = await fetchScores('throwball-men');
         
         if (scores.length === 0) {
           setMatches([]);
@@ -130,16 +149,14 @@ const CricketScore = () => {
           team1: score.team1 || { name: 'Team 1', logo: '/imgs/icon/icon.svg', score: '0' },
           team2: score.team2 || { name: 'Team 2', logo: '/imgs/icon/icon.svg', score: '0' },
           date: score.date || 'TBD',
-          time: score.time || '7:00 PM',
-          ground: score.ground || 'Cricket Ground',
-          matchType: score.matchType || 'Cricket',
-          matchNumber: score.matchNumber || '',
+          ground: score.ground || 'Main Court',
+          matchType: score.matchType || 'Throwball Men',
           winner: score.winner || ''
         }));
         
         setMatches(formattedMatches);
       } catch (err) {
-        console.error('Error fetching cricket matches:', err);
+        console.error('Error fetching throwball matches:', err);
         setError('Failed to load matches. Please try again later.');
       } finally {
         setLoading(false);
@@ -151,7 +168,7 @@ const CricketScore = () => {
 
   return (
     <main className="bg-[#f4e4c9] px-2 py-4 md:px-8 md:py-12 min-h-screen">
-      <div className="container mx-auto">
+      <div className="container mx-auto max-w-5xl">
         {/* Header Section */}
         <motion.header
           initial={{ opacity: 0 }}
@@ -160,7 +177,7 @@ const CricketScore = () => {
         >
           <div className="flex items-center bg-[#07534c] px-6 py-3 rounded-full shadow-md">
             <Trophy className="mr-2 h-6 w-6 text-[#a58255]" />
-            <h1 className="text-2xl font-black text-[#e7fefe]">Cricket</h1>
+            <h1 className="text-2xl font-black text-[#e7fefe]">Throwball Men's</h1>
           </div>
         </motion.header>
 
@@ -183,7 +200,7 @@ const CricketScore = () => {
         {!loading && !error && matches.length > 0 && (
           <div className="grid gap-4">
             {matches.map((match, index) => (
-              <CricketMatchCard key={match.id || index} match={match} index={index} />
+              <ThrowballMatchCard key={match.id || index} match={match} index={index} />
             ))}
           </div>
         )}
@@ -199,4 +216,4 @@ const CricketScore = () => {
   );
 };
 
-export default CricketScore;
+export default ThrowballScoreMen;

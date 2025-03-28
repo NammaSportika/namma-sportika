@@ -11,5 +11,20 @@ service cloud.firestore {
     match /feedback/{feedbackId} {
       allow read, write: if true;  // Temporarily allow all operations
     }
+    
+    // Match the cricket-matches collection
+    match /cricket-matches/{matchId} {
+      allow read, write: if true;  // Allow read and write operations
+    }
+    
+    // Match the sports_scores collection (legacy)
+    match /sports_scores/{scoreId} {
+      allow read, write: if true;  // Allow read and write operations for sports scores
+    }
+    
+    // Match the new score_board collection structure
+    match /score_board/{sportId}/{document=**} {
+      allow read, write: if true;  // Allow read and write operations for all subcollections
+    }
   }
 }

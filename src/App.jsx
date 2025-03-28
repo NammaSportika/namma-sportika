@@ -1,3 +1,4 @@
+// In your main App.js
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './pages/Navbar';
 import LandingPage from './pages/LandingPage/LandingPage';
@@ -22,7 +23,10 @@ import AdminRegistrations from './pages/AdminRegistrations';
 import FeedbackForm from './pages/FeedbackForm';
 import AdminFeedback from './pages/AdminFeedback';
 import RegistrationClosedPage from './pages/RegistrationClosedPage';
-import CricketScore from './pages/ScoreBoard/CricketScore';
+import ScoreBoardRouter from './pages/ScoreBoard/ScoreBoardRouter';
+import SportsList from './pages/ScoreBoard/SportsList';
+import TeamPage from './pages/TeamPage';
+
 const AppContent = () => {
   const location = useLocation();
   const isLandingPage = location.pathname === '/';
@@ -30,7 +34,6 @@ const AppContent = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Render Navbar only if it's not the landing page and not an admin page */}
       {!isLandingPage && !hideNavFooter && <Navbar />}
       <ScrollToTop />
       <main className="flex-grow">
@@ -49,17 +52,17 @@ const AppContent = () => {
           <Route path="/events/kabaddi" element={<KabaddiPage />} />
           <Route path="/events/throwball" element={<ThrowballPage />} />
           <Route path="/events/volleyball" element={<VolleyballPage />} />
-          <Route path="/registration" element={<RegistrationClosedPage  />} />
+          <Route path="/registration" element={<RegistrationClosedPage />} />
           <Route path="/admin-registrations" element={<AdminRegistrations />} />
           <Route path="/admin-feedback" element={<AdminFeedback />} />
-          {/* <Route path='/feedback' element={<FeedbackForm />} /> */}
-
-          {/* <Route path="/score-board" element={<CricketScore />} /> */}
-
+          {/* <Route path="/team" element={<TeamPage />} /> */}
+          {/* Nested routing for Scoreboard */}
+          <Route path="/scoreboard/*" element={<ScoreBoardRouter />} />
+          <Route path="/scoreboard" element={<SportsList />} />
+          <Route path="/scoreboard/*" element={<ScoreBoardRouter />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
-      {/* Render Footer only if not on admin pages */}
       {!hideNavFooter && <Footer />}
     </div>
   );

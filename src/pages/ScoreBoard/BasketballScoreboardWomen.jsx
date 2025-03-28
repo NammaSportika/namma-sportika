@@ -3,11 +3,11 @@ import { Calendar, Clock, MapPin, Trophy, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { fetchScores } from '../../pages/ScoreBoardAdmin/firebaseUtils';
 
-const CricketMatchCard = ({ match, index }) => {
+const BasketballMatchCard = ({ match, index }) => {
   // Determine the match title based on matchType
   const matchTitle = match.matchType 
     ? `${match.matchType}` 
-    : 'Cricket';
+    : 'Basketball Women\'s';
 
   return (
     <motion.div
@@ -52,9 +52,6 @@ const CricketMatchCard = ({ match, index }) => {
                 </h2>
                 <div className="w-full rounded-lg bg-[#a58255]/20 p-2 text-center">
                   <p className="text-xl md:text-3xl font-black text-[#e7fefe]">{match.team1?.score}</p>
-                  {match.team1?.overs && (
-                    <p className="text-sm text-[#e7fefe] mt-1">({match.team1.overs} overs)</p>
-                  )}
                 </div>
               </div>
 
@@ -84,9 +81,6 @@ const CricketMatchCard = ({ match, index }) => {
                 </h2>
                 <div className="w-full rounded-lg bg-[#a58255]/20 p-2 text-center">
                   <p className="text-xl md:text-3xl font-black text-[#e7fefe]">{match.team2?.score}</p>
-                  {match.team2?.overs && (
-                    <p className="text-sm text-[#e7fefe] mt-1">({match.team2.overs} overs)</p>
-                  )}
                 </div>
               </div>
             </div>
@@ -107,7 +101,7 @@ const CricketMatchCard = ({ match, index }) => {
   );
 };
 
-const CricketScore = () => {
+const BasketballScoreboardWomen = () => {
   const [matches, setMatches] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -116,8 +110,8 @@ const CricketScore = () => {
     const getMatches = async () => {
       try {
         setLoading(true);
-        // Fetch cricket matches from Firebase
-        const scores = await fetchScores('cricket');
+        // Fetch basketball matches from Firebase
+        const scores = await fetchScores('basketball-women');
         
         if (scores.length === 0) {
           setMatches([]);
@@ -131,15 +125,15 @@ const CricketScore = () => {
           team2: score.team2 || { name: 'Team 2', logo: '/imgs/icon/icon.svg', score: '0' },
           date: score.date || 'TBD',
           time: score.time || '7:00 PM',
-          ground: score.ground || 'Cricket Ground',
-          matchType: score.matchType || 'Cricket',
+          ground: score.ground || 'Main Court',
+          matchType: score.matchType || 'Basketball Women',
           matchNumber: score.matchNumber || '',
           winner: score.winner || ''
         }));
         
         setMatches(formattedMatches);
       } catch (err) {
-        console.error('Error fetching cricket matches:', err);
+        console.error('Error fetching basketball matches:', err);
         setError('Failed to load matches. Please try again later.');
       } finally {
         setLoading(false);
@@ -160,7 +154,7 @@ const CricketScore = () => {
         >
           <div className="flex items-center bg-[#07534c] px-6 py-3 rounded-full shadow-md">
             <Trophy className="mr-2 h-6 w-6 text-[#a58255]" />
-            <h1 className="text-2xl font-black text-[#e7fefe]">Cricket</h1>
+            <h1 className="text-2xl font-black text-[#e7fefe]">Basketball Women</h1>
           </div>
         </motion.header>
 
@@ -183,7 +177,7 @@ const CricketScore = () => {
         {!loading && !error && matches.length > 0 && (
           <div className="grid gap-4">
             {matches.map((match, index) => (
-              <CricketMatchCard key={match.id || index} match={match} index={index} />
+              <BasketballMatchCard key={match.id || index} match={match} index={index} />
             ))}
           </div>
         )}
@@ -199,4 +193,4 @@ const CricketScore = () => {
   );
 };
 
-export default CricketScore;
+export default BasketballScoreboardWomen;
