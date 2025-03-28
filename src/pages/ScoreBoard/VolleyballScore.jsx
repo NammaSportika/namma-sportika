@@ -121,7 +121,7 @@ const VolleyballScore = () => {
           date: score.date || 'TBD',
           time: score.time || '7:00 PM',
           ground: score.ground || 'Main Court',
-          matchType: score.matchType || 'Volleyball Championship',
+          matchType: score.matchType || 'Volleyball',
           matchNumber: score.matchNumber || '',
           winner: score.winner || ''
         }));
@@ -149,7 +149,7 @@ const VolleyballScore = () => {
         >
           <div className="flex items-center bg-[#07534c] px-6 py-3 rounded-full shadow-md">
             <Trophy className="mr-2 h-6 w-6 text-[#a58255]" />
-            <h1 className="text-2xl font-black text-[#e7fefe]">Volleyball Championship</h1>
+            <h1 className="text-2xl font-black text-[#e7fefe]">Volleyball</h1>
           </div>
         </motion.header>
 
