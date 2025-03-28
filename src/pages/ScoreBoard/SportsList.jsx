@@ -4,10 +4,10 @@ import { Trophy, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const sportsList = [
-  { id: 'athletics-men-100', name: 'Athletics Men 100', route: '/scoreboard/athletics-men-100' },
-  { id: 'athletics-women-100', name: 'Athletics Women 100', route: '/scoreboard/athletics-women-100' },
-  { id: 'athletics-men-200', name: 'Athletics Men 200', route: '/scoreboard/athletics-men-200' },
-  { id: 'athletics-women-200', name: 'Athletics Women 200', route: '/scoreboard/athletics-women-200' },
+  // { id: 'athletics-men-100', name: 'Athletics Men 100', route: '/scoreboard/athletics-men-100' },
+  // { id: 'athletics-women-100', name: 'Athletics Women 100', route: '/scoreboard/athletics-women-100' },
+  // { id: 'athletics-men-200', name: 'Athletics Men 200', route: '/scoreboard/athletics-men-200' },
+  // { id: 'athletics-women-200', name: 'Athletics Women 200', route: '/scoreboard/athletics-women-200' },
   { id: 'basketball-men', name: 'Basketball Men', route: '/scoreboard/basketball-men' },
   { id: 'basketball-women', name: 'Basketball Women', route: '/scoreboard/basketball-women' },
   { id: 'chess', name: 'Chess', route: '/scoreboard/chess' },

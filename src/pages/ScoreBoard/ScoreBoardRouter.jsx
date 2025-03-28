@@ -31,10 +31,10 @@ const ScoreBoardRouter = () => {
       <Route path="chess" element={<ChessScore />} />
       <Route path="basketball-men" element={<BasketballScoreboardMen />} />
       <Route path="basketball-women" element={<BasketballScoreboardWomen />} />
-      <Route path="athletics-men-100" element={<AthleticsScoreMen100 />} />
+      {/* <Route path="athletics-men-100" element={<AthleticsScoreMen100 />} />
       <Route path="athletics-men-200" element={<AthleticsScoreMen200 />} />
       <Route path="athletics-women-100" element={<AthleticsScoreWomen100 />} />
-      <Route path="athletics-women-200" element={<AthleticsScoreWomen200 />} />
+      <Route path="athletics-women-200" element={<AthleticsScoreWomen200 />} /> */}
       <Route path="score-admin" element={<SportsAdmin />} />
       {/* Default route to redirect to SportsList if no specific scoreboard is matched */}
       <Route index element={<SportsList />} />
