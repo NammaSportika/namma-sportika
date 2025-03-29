@@ -15,7 +15,7 @@ import {
   colleges 
 } from './firebaseUtils';
 
-const ADMIN_EMAILS = ['bgangadh2@gitam.edu','pkoola@gitam.in','vagrawal@gitam.in','kthota2@gitam.in'];
+const ADMIN_EMAILS = ['bgangadh2@gitam.edu','pkoola@gitam.in','vagrawal@gitam.in'];
 
 const SPORTS = [
   { 
