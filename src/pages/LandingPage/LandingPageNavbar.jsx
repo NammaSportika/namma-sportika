@@ -44,6 +44,7 @@ const LandingPageNavbar = ({ user, handleLogout }) => {
     { to: '/scoreboard', label: 'Scoreboard', onClick: () => navigate('/scores') },
     { to: '/registration', label: 'Registration', onClick: () => navigate('/registration') },
     { to: '/gallery', label: 'Gallery', onClick: () => navigate('/gallery') },
+    { to: '/team', label: 'Team', onClick: () => navigate('/team') },
     { to: '/contact', label: 'Contact', onClick: () => navigate('/contact') },
     // { to: '/feedback', label: 'Feedback', onClick: () => navigate('/feedback') }
   ];

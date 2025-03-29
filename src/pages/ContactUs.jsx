@@ -51,18 +51,6 @@ const ContactUs = () => {
                   <span className="font-medium">7349495176</span>
                 </a>
               </div>
-              {/* <div className="flex items-center justify-between bg-[#a58255] rounded-lg p-3 sm:p-4">
-                <p className="text-[#e7fefe] font-medium text-base sm:text-lg truncate pr-2">
-                  Bharath K G
-                </p>
-                <a
-                  href="tel:8880487408"
-                  className="flex items-center gap-1 sm:gap-2 text-[#e7fefe] hover:text-white transition-colors whitespace-nowrap"
-                >
-                  <FiPhone />
-                  <span className="font-medium">8880487408</span>
-                </a>
-              </div> */}
               <div className="flex items-center justify-between bg-[#a58255] rounded-lg p-3 sm:p-4">
                 <a
                   href="mailto:nammasportika@gmail.com"
@@ -139,7 +127,7 @@ const ContactUs = () => {
 
 const TeamCard = ({ contact }) => {
   return (
-    <div className="h-full w-full px-7 py-3">
+    <div className="h-full w-full px-4 py-3">
       <div className="bg-[#a58255] rounded-xl overflow-hidden shadow-md h-full flex flex-col">
         <div className="aspect-square bg-[#07534c]">
           <img
@@ -151,10 +139,10 @@ const TeamCard = ({ contact }) => {
         </div>
 
         {/* Always visible content */}
-        <div className="p-4 flex flex-col gap-2">
+        <div className="p-3 flex flex-col gap-2">
           <div className="flex items-center gap-2">
             <FiUser className="text-[#e7fefe] w-4 h-4" />
-            <h3 className="text-[#e7fefe] font-semibold text-sm sm:text-base line-clamp-1">
+            <h3 className="text-[#e7fefe] font-semibold text-sm line-clamp-1">
               {contact.name}
             </h3>
           </div>
@@ -165,7 +153,7 @@ const TeamCard = ({ contact }) => {
               href={contact.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#e7fefe] text-xs sm:text-sm line-clamp-1 hover:underline"
+              className="text-[#e7fefe] text-xs line-clamp-1 hover:underline"
             >
               LinkedIn Profile
             </a>
@@ -173,14 +161,14 @@ const TeamCard = ({ contact }) => {
 
           <div className="flex items-center gap-2">
             <FiMail className="text-[#e7fefe] w-4 h-4" />
-            <p className="text-[#e7fefe] text-xs sm:text-sm line-clamp-1">
+            <p className="text-[#e7fefe] text-xs line-clamp-1">
               {contact.email}
             </p>
           </div>
 
           <div className="flex items-center gap-2">
             <FiPhone className="text-[#e7fefe] w-4 h-4" />
-            <p className="text-[#e7fefe] text-xs sm:text-sm">
+            <p className="text-[#e7fefe] text-xs">
               {contact.phone}
             </p>
           </div>
@@ -219,7 +207,7 @@ const TeamSection = ({ title, contacts }) => {
       }}
     >
       <SectionHeading title={title} />
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mx-auto max-w-4xl">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mx-auto max-w-5xl">
         {contacts.map((contact, index) => (
           <motion.div
             key={index}
@@ -245,6 +233,13 @@ const OurTeam = () => {
       linkedin: "https://www.linkedin.com/in/agrawalvansh/", // Replace with actual LinkedIn URL
       phone: "+91-7378882317",
       email: "agrawalvanshn@gmail.com"
+    },
+    {
+      image: "/imgs/TeamPics/3.svg",
+      name: "Adarsha T A",
+      linkedin: "https://www.linkedin.com/in/adarsha-thonder/", // Replace with actual LinkedIn URL
+      phone: "+91-8073638086",
+      email: "athonder@gitam.in"
     },
     {
       image: "/imgs/TeamPics/2.svg",
@@ -274,7 +269,7 @@ const OurTeam = () => {
     >
       {/* Team Section */}
       <div className="container mx-auto px-2 sm:px-4">
-        <TeamSection title="DEVELOPERS" contacts={developers} cardsPerRow={3} />
+        <TeamSection title="DEVELOPERS" contacts={developers} />
       </div>
     </motion.section>
   );
