@@ -25,13 +25,13 @@ const TeamCard = ({ contact }) => {
         </div>
 
         <div className="p-2 sm:p-3 md:p-4 flex-grow">
-          <div className="flex items-center gap-1 sm:gap-2 mb-1">
-            <FiUser className="text-[#e7fefe] w-3 h-3 sm:w-4 sm:h-4" />
-            <h3 className="text-[#e7fefe] font-semibold text-xs sm:text-sm md:text-base line-clamp-1">{contact.name}</h3>
+          <div className="flex items-start gap-1 sm:gap-2 mb-1">
+            <FiUser className="text-[#e7fefe] w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0 mt-1" />
+            <h3 className="text-[#e7fefe] font-semibold text-xs sm:text-sm md:text-base break-words">{contact.name}</h3>
           </div>
-          <div className="flex items-center gap-1 sm:gap-2">
-            <FiBriefcase className="text-[#e7fefe] w-3 h-3 sm:w-4 sm:h-4" />
-            <p className="text-[#e7fefe] text-xs sm:text-sm line-clamp-1">{contact.position}</p>
+          <div className="flex items-start gap-1 sm:gap-2">
+            <FiBriefcase className="text-[#e7fefe] w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0 mt-1" />
+            <p className="text-[#e7fefe] text-xs sm:text-sm break-words">{contact.position}</p>
           </div>
         </div>
       </div>
@@ -110,14 +110,14 @@ const OurTeam = () => {
   
   const management = [
     {
-      image: "/imgs/Team/8.png",
-      name: "VAMSHI",
-      position: "Assistant Director - PEY"
-    },
-    {
       image: "/imgs/Team/9.png",
       name: "Luther",
       position: "Manager - DOS"
+    },
+    {
+      image: "/imgs/Team/8.png",
+      name: "Vamsi",
+      position: "Assistant Director - PEY"
     },
     {
       image: "/imgs/Team/7.png",
@@ -180,7 +180,7 @@ const OurTeam = () => {
   const heads = [
     {
       image: "/imgs/Team/14.png",
-      name: "SUNANDA",
+      name: "Sunanda",
       position: "Design & Media"
     },
     {
@@ -273,7 +273,7 @@ const OurTeam = () => {
         <TeamSection title="COACHES" contacts={coaches} cardsPerRow={5} />
         <TeamSection title="CHAIRS" contacts={chairs} cardsPerRow={4} />
         
-        {/* Modified HEADS section */}
+        {/* Modified HEADS section - With responsive grid for mobile */}
         <motion.div 
           className="w-full"
           initial="hidden"
@@ -291,20 +291,25 @@ const OurTeam = () => {
           }}
         >
           <SectionHeading title="HEADS" />
-          {/* First 10 heads in 5 columns */}
-          <div className="mb-3">
-            <TeamSection 
-              contacts={heads.slice(0, 10)} 
-              cardsPerRow={5} 
-              noHeading={true} 
-            />
+          {/* Responsive grid that shows 3 cards per row on mobile, 5 on larger screens */}
+          <div className="grid grid-cols-3 md:grid-cols-5 gap-3 mx-auto max-w-full md:max-w-[calc(5*240px)]">
+            {heads.map((contact, index) => (
+              <motion.div
+                key={index}
+                className="min-w-0"
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { 
+                    opacity: 1, 
+                    y: 0,
+                    transition: { duration: 0.5 }
+                  }
+                }}
+              >
+                <TeamCard contact={contact} />
+              </motion.div>
+            ))}
           </div>
-          {/* Last 4 heads centered */}
-          <TeamSection 
-            contacts={heads.slice(10)} 
-            cardsPerRow={4} 
-            noHeading={true} 
-          />
         </motion.div>
       </div>
     </motion.section>
