@@ -14,7 +14,7 @@ const ThrowballMatchCard = ({ match, index }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: index * 0.1 }}
-      className="relative w-full max-w-2xl mx-auto mb-6 px-4 min-h-screen"
+      className="relative w-full max-w-2xl mx-auto mb-6 px-4"
     >
       {/* Main Card */}
       <motion.div
@@ -94,31 +94,6 @@ const ThrowballMatchCard = ({ match, index }) => {
                 </div>
               </div>
             )}
-
-            {/* Match Metadata */}
-            <div className="w-full mt-4">
-              <div className="flex justify-around rounded-lg bg-[#07534c] p-3 shadow-inner">
-                <div className="flex items-center gap-2 text-[#e7fefe]">
-                  <div className="rounded-lg bg-[#a58255] p-2">
-                    <Calendar className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-bold uppercase tracking-wider">Date</p>
-                    <p className="text-sm font-semibold">{match.date}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2 text-[#e7fefe]">
-                  <div className="rounded-lg bg-[#a58255] p-2">
-                    <MapPin className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-bold uppercase tracking-wider">Venue</p>
-                    <p className="text-sm font-semibold">{match.ground}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </motion.div>
@@ -173,7 +148,7 @@ const ThrowballScoreMen = () => {
         <motion.header
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="mb-8 flex items-center justify-center"
+          className="flex items-center justify-center mb-8"
         >
           <div className="flex items-center bg-[#07534c] px-6 py-3 rounded-full shadow-md">
             <Trophy className="mr-2 h-6 w-6 text-[#a58255]" />

@@ -95,7 +95,7 @@ export const colleges = [
     logo: '/imgs/collegeLogos/Sai Vidhya Institute.png'
   },
   { 
-    name: 'SESHADRIPURAM MAIN', 
+    name: 'SESHADRIPURAM COLLEGE', 
     logo: '/imgs/collegeLogos/SESHADRIPURAM MAIN.png'
   },
   { 

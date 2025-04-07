@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, Clock, MapPin, Trophy, Award } from 'lucide-react';
+import { Trophy, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { fetchScores } from '../../pages/ScoreBoardAdmin/firebaseUtils';
 
