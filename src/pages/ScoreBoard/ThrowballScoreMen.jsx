@@ -6,8 +6,8 @@ import { fetchScores } from '../../pages/ScoreBoardAdmin/firebaseUtils';
 const ThrowballMatchCard = ({ match, index }) => {
   // Determine the match title based on matchType
   const matchTitle = match.matchType 
-    ? `Throwball Men's ${match.matchType}` 
-    : 'Throwball Men\'s';
+    ? `${match.matchType}` 
+    : '';
 
   return (
     <motion.div
