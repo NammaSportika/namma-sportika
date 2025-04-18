@@ -212,10 +212,10 @@ const ImageCard = ({
 const Gallery = ({ 
   images = []
 }) => {
-  // Split images into three rows for the marquee
-  const firstRow = images.slice(0, Math.ceil(images.length / 3));
-  const secondRow = images.slice(Math.ceil(images.length / 3), Math.ceil(images.length / 3) * 2);
-  const thirdRow = images.slice(Math.ceil(images.length / 3) * 2);
+  // Split images into three rows of 12 each for the marquee
+  const firstRow = images.slice(0, 12);
+  const secondRow = images.slice(12, 24);
+  const thirdRow = images.slice(24, 36);
   
   // Adjust marquee speed based on screen size and row content
   const baseDuration = 30; // seconds for desktop
@@ -296,7 +296,7 @@ const Gallery = ({
 // Example usage in a GalleryPage with PNG images instead of SVG
 export default function GalleryPage() {
   const galleryItems = [
-    // First row (1-9)
+    // First row (1-12)
     { image: "/imgs/GalleryImg/1.png" },
     { image: "/imgs/GalleryImg/2.png" },
     { image: "/imgs/GalleryImg/3.png" },
@@ -306,28 +306,35 @@ export default function GalleryPage() {
     { image: "/imgs/GalleryImg/7.png" },
     { image: "/imgs/GalleryImg/8.png" },
     { image: "/imgs/GalleryImg/9.png" },
-    
-    // Second row (10-18)
     { image: "/imgs/GalleryImg/10.png" },
     { image: "/imgs/GalleryImg/11.png" },
     { image: "/imgs/GalleryImg/12.png" },
+    // Second row (13-24)
     { image: "/imgs/GalleryImg/13.png" },
     { image: "/imgs/GalleryImg/14.png" },
     { image: "/imgs/GalleryImg/15.png" },
     { image: "/imgs/GalleryImg/16.png" },
     { image: "/imgs/GalleryImg/17.png" },
     { image: "/imgs/GalleryImg/18.png" },
-    
-    // Third row (19-27)
     { image: "/imgs/GalleryImg/19.png" },
     { image: "/imgs/GalleryImg/20.png" },
     { image: "/imgs/GalleryImg/21.png" },
     { image: "/imgs/GalleryImg/22.png" },
     { image: "/imgs/GalleryImg/23.png" },
     { image: "/imgs/GalleryImg/24.png" },
+    // Third row (25-36)
     { image: "/imgs/GalleryImg/25.png" },
     { image: "/imgs/GalleryImg/26.png" },
-    { image: "/imgs/GalleryImg/27.png" }
+    { image: "/imgs/GalleryImg/27.png" },
+    { image: "/imgs/GalleryImg/28.png" },
+    { image: "/imgs/GalleryImg/29.png" },
+    { image: "/imgs/GalleryImg/30.png" },
+    { image: "/imgs/GalleryImg/31.png" },
+    { image: "/imgs/GalleryImg/32.png" },
+    { image: "/imgs/GalleryImg/33.png" },
+    { image: "/imgs/GalleryImg/34.png" },
+    { image: "/imgs/GalleryImg/35.png" },
+    { image: "/imgs/GalleryImg/36.png" }
   ];
 
   return (

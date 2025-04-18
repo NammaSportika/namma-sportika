@@ -84,5 +84,4 @@ firebase deploy
 
 ## Contact
 
-For questions or support, please contact [Vansh Agrawal](mailto:agrawalvansh@gmail.com).
-
+For any inquiries, please reach out to agrawalvanshn@gmail.com.
