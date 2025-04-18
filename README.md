@@ -1,6 +1,6 @@
 # Namma Sportika Website
 
-A modern web application for Namma Sportika, a sports management platform featuring cricket match scoring, event management, and administrative tools.
+A modern web application for Namma Sportika, a sports management platform featuring match scoring, event management, and administrative tools.
 
 ## Project Overview
 
@@ -8,7 +8,7 @@ Namma Sportika Website is built with React and Firebase, providing a comprehensi
 
 ## Features
 
-- **Cricket Match Scoring**: Real-time cricket match scoreboard display
+- **Match Scoring**: Real-time match scoreboard display
 - **Event Management**: Information about upcoming and past sporting events
 - **Admin Dashboard**: Tools for managing match data, registrations, and feedback
 - **Responsive Design**: Mobile-friendly interface built with Tailwind CSS
@@ -25,7 +25,7 @@ Namma Sportika Website is built with React and Firebase, providing a comprehensi
 
 - `/src/components`: Reusable UI components
 - `/src/pages`: Main application pages including:
-  - `/Events`: Event-related pages including Cricket events
+  - `/Events`: Event-related pages including sporting events
   - `/ScoreBoard`: Match scoreboard displays
   - `/ScoreBoardAdmin`: Admin tools for managing match data
 - `/src/firebase`: Firebase configuration and utilities
@@ -33,7 +33,7 @@ Namma Sportika Website is built with React and Firebase, providing a comprehensi
 
 ## Key Components
 
-- **CricketScore.jsx**: Component for displaying cricket match data
+- **MatchScore.jsx**: Component for displaying match data
 - **SportsAdmin.jsx**: Administrative interface for managing sports data
 - **firebaseUtils.js**: Firebase utility functions for data operations
 
