@@ -10,9 +10,8 @@ import {
   orderBy,
   serverTimestamp
 } from 'firebase/firestore';
-import { db } from '../../firebase/config'; // Adjust this import path based on where your Firebase config is
+import { db } from '../../firebase/config';
 
-// Predefined colleges with logos and additional details
 export const colleges = [
   { 
     name: 'ACHARYA INSTITUTE', 
@@ -120,7 +119,6 @@ export const colleges = [
   }
 ];
 
-// Enhanced retry operation with more flexible error handling
 const retryOperation = async (
   operation, 
   {
@@ -137,13 +135,12 @@ const retryOperation = async (
       console.warn(`Attempt ${attempt} failed:`, error);
       lastError = error;
       
-      // Check if error is retriable
       const isRetriable = retriableErrors.some(errType => 
         error.message.toLowerCase().includes(errType)
       );
       
       if (isRetriable && attempt < maxRetries) {
-        const delay = baseDelay * Math.pow(2, attempt - 1); // Exponential backoff
+        const delay = baseDelay * Math.pow(2, attempt - 1);
         console.log(`Retrying in ${delay}ms...`);
         await new Promise(resolve => setTimeout(resolve, delay));
       } else {
@@ -154,15 +151,12 @@ const retryOperation = async (
   throw lastError;
 };
 
-// Comprehensive match validation
 const validateMatchData = (matchData) => {
   const errors = [];
 
-  // Team name validation
   if (!matchData.team1?.name) errors.push('Team 1 name is required');
   if (!matchData.team2?.name) errors.push('Team 2 name is required');
   
-  // Score validation (optional but recommended)
   if (matchData.team1?.score && !/^\d+\/\d+$/.test(matchData.team1.score)) {
     errors.push('Team 1 score should be in format "runs/wickets"');
   }
@@ -171,7 +165,6 @@ const validateMatchData = (matchData) => {
     errors.push('Team 2 score should be in format "runs/wickets"');
   }
 
-  // Overs validation
   if (matchData.team1?.overs && !/^\d+(\.\d)?$/.test(matchData.team1.overs)) {
     errors.push('Team 1 overs should be in decimal format (e.g., 20.0)');
   }
@@ -180,7 +173,6 @@ const validateMatchData = (matchData) => {
     errors.push('Team 2 overs should be in decimal format (e.g., 20.0)');
   }
 
-  // Date validation
   if (matchData.date && isNaN(Date.parse(matchData.date))) {
     errors.push('Invalid date format');
   }
@@ -190,22 +182,18 @@ const validateMatchData = (matchData) => {
   }
 };
 
-// Add a new match to Firestore with comprehensive error handling
 export const addMatch = async (matchData) => {
   try {
-    // Validate match data
     validateMatchData(matchData);
     
     console.log('Adding match data:', matchData);
     
-    // Ensure createdAt is set
     const dataToAdd = {
       ...matchData,
       createdAt: matchData.createdAt || new Date(),
       updatedAt: new Date()
     };
     
-    // Use retry logic for the Firestore operation
     const docRef = await retryOperation(
       async () => {
         const matchesRef = collection(db, 'cricket-matches');
@@ -225,7 +213,6 @@ export const addMatch = async (matchData) => {
   }
 };
 
-// Fetch matches with advanced filtering and pagination
 export const fetchMatches = async (options = {}) => {
   const {
     limit = 50,
@@ -239,21 +226,16 @@ export const fetchMatches = async (options = {}) => {
     const matches = await retryOperation(async () => {
       const matchesRef = collection(db, 'cricket-matches');
       
-      // Build query with optional filters
       let q = query(matchesRef);
       
-      // Add where clauses for filtering
       Object.entries(filterBy).forEach(([field, value]) => {
         q = query(q, where(`team1.${field}`, '==', value));
       });
       
-      // Add ordering
       q = query(q, orderBy(sortBy, sortOrder));
       
-      // Add limit
       q = query(q, limit);
       
-      // Optional: start after a specific document for pagination
       if (startAfter) {
         q = query(q, startAfter(startAfter));
       }
@@ -274,13 +256,10 @@ export const fetchMatches = async (options = {}) => {
   }
 };
 
-// Update an existing match
 export const updateMatch = async (matchId, updateData) => {
   try {
-    // Validate updated match data
     validateMatchData(updateData);
     
-    // Add updatedAt timestamp
     const dataToUpdate = {
       ...updateData,
       updatedAt: new Date()
@@ -304,7 +283,6 @@ export const updateMatch = async (matchId, updateData) => {
   }
 };
 
-// Delete a match
 export const deleteMatch = async (matchId) => {
   try {
     const matchRef = doc(db, 'cricket-matches', matchId);
@@ -325,7 +303,6 @@ export const deleteMatch = async (matchId) => {
   }
 };
 
-// Utility to get match statistics
 export const getMatchStatistics = async () => {
   try {
     const matches = await fetchMatches();
@@ -336,7 +313,6 @@ export const getMatchStatistics = async () => {
       recentMatches: matches.slice(0, 5)
     };
     
-    // Aggregate team statistics
     matches.forEach(match => {
       const teams = [match.team1, match.team2];
       
@@ -352,7 +328,6 @@ export const getMatchStatistics = async () => {
         const teamStats = stats.teamStats[team.name];
         teamStats.matchesPlayed++;
         
-        // Parse score
         const scoreMatch = team.score.match(/(\d+)\/\d+/);
         if (scoreMatch) {
           teamStats.totalRuns += parseInt(scoreMatch[1], 10);
@@ -368,16 +343,12 @@ export const getMatchStatistics = async () => {
   }
 };
 
-// Add a new score
 export const addScore = async (scoreData) => {
   try {
-    // For team sports vs individual sports
     if (scoreData.team1) {
-      // Team sports go to score_board/{sportId}/teams
       const scoresRef = collection(db, 'score_board', scoreData.sportId, 'teams');
       return await addDoc(scoresRef, scoreData);
     } else {
-      // Individual sports go to score_board/{sportId}/scores
       const scoresRef = collection(db, 'score_board', scoreData.sportId, 'scores');
       return await addDoc(scoresRef, scoreData);
     }
@@ -387,10 +358,8 @@ export const addScore = async (scoreData) => {
   }
 };
 
-// Fetch scores for a specific sport
 export const fetchScores = async (sportId) => {
   try {
-    // First, try fetching from the new score_board/sportId/scores structure
     const scoresRef = collection(db, 'score_board', sportId, 'scores');
     const scoresSnapshot = await getDocs(scoresRef);
     
@@ -400,7 +369,6 @@ export const fetchScores = async (sportId) => {
         ...doc.data()
       }));
       
-      // Sort by match number in descending order if it's a team sport
       if (sportId.includes('basketball') || 
           sportId.includes('football') || 
           sportId.includes('throwball') || 
@@ -408,17 +376,15 @@ export const fetchScores = async (sportId) => {
           sportId.includes('volleyball') || 
           sportId.includes('cricket')) {
         return scores.sort((a, b) => {
-          // Convert match numbers to integers for proper numerical sorting
           const matchNumA = parseInt(a.matchNumber) || 0;
           const matchNumB = parseInt(b.matchNumber) || 0;
-          return matchNumB - matchNumA; // Descending order
+          return matchNumB - matchNumA;
         });
       }
       
       return scores;
     }
 
-    // If no data in scores subcollection, try teams subcollection
     const teamsRef = collection(db, 'score_board', sportId, 'teams');
     const teamsSnapshot = await getDocs(teamsRef);
     
@@ -428,7 +394,6 @@ export const fetchScores = async (sportId) => {
         ...doc.data()
       }));
       
-      // Sort by match number in descending order if it's a team sport
       if (sportId.includes('basketball') || 
           sportId.includes('football') || 
           sportId.includes('throwball') || 
@@ -436,17 +401,15 @@ export const fetchScores = async (sportId) => {
           sportId.includes('volleyball') || 
           sportId.includes('cricket')) {
         return scores.sort((a, b) => {
-          // Convert match numbers to integers for proper numerical sorting
           const matchNumA = parseInt(a.matchNumber) || 0;
           const matchNumB = parseInt(b.matchNumber) || 0;
-          return matchNumB - matchNumA; // Descending order
+          return matchNumB - matchNumA;
         });
       }
       
       return scores;
     }
 
-    // If no data in new structure, fall back to legacy sports_scores collection
     const legacyQuery = query(
       collection(db, 'sports_scores'), 
       where('sportId', '==', sportId)
@@ -458,7 +421,6 @@ export const fetchScores = async (sportId) => {
       ...doc.data()
     }));
     
-    // Sort by match number in descending order if it's a team sport
     if (sportId.includes('basketball') || 
         sportId.includes('football') || 
         sportId.includes('throwball') || 
@@ -466,10 +428,9 @@ export const fetchScores = async (sportId) => {
         sportId.includes('volleyball') || 
         sportId.includes('cricket')) {
       return scores.sort((a, b) => {
-        // Convert match numbers to integers for proper numerical sorting
         const matchNumA = parseInt(a.matchNumber) || 0;
         const matchNumB = parseInt(b.matchNumber) || 0;
-        return matchNumB - matchNumA; // Descending order
+        return matchNumB - matchNumA;
       });
     }
     
@@ -480,21 +441,16 @@ export const fetchScores = async (sportId) => {
   }
 };
 
-// Update an existing score
 export const updateScore = async (scoreId, updatedData) => {
   try {
-    // Determine the correct collection path
     if (updatedData.team1) {
-      // Team sports
       const scoreRef = doc(db, 'score_board', updatedData.sportId, 'teams', scoreId);
       return await updateDoc(scoreRef, updatedData);
     } else {
-      // Individual sports
       const scoreRef = doc(db, 'score_board', updatedData.sportId, 'scores', scoreId);
       return await updateDoc(scoreRef, updatedData);
     }
   } catch (error) {
-    // If error, try the legacy collection
     try {
       const scoreRef = doc(db, 'sports_scores', scoreId);
       return await updateDoc(scoreRef, updatedData);
@@ -505,10 +461,8 @@ export const updateScore = async (scoreId, updatedData) => {
   }
 };
 
-// Delete a score
 export const deleteScore = async (scoreId, sportId) => {
   try {
-    // First try to determine if it's a team sport based on the sportId
     const isTeamSport = sportId.includes('basketball') || 
                         sportId.includes('football') || 
                         sportId.includes('throwball') || 
@@ -516,21 +470,17 @@ export const deleteScore = async (scoreId, sportId) => {
                         sportId.includes('volleyball') || 
                         sportId.includes('cricket');
     
-    // Determine the correct collection path based on sport type
     try {
       if (isTeamSport) {
-        // For team sports, check in teams subcollection
         const teamRef = doc(db, `score_board/${sportId}/teams`, scoreId);
         return await deleteDoc(teamRef);
       } else {
-        // For individual sports, check in scores subcollection
         const scoreRef = doc(db, `score_board/${sportId}/scores`, scoreId);
         return await deleteDoc(scoreRef);
       }
     } catch (primaryError) {
       console.warn('Primary deletion path failed:', primaryError);
       
-      // Fallback to legacy collection if the primary path fails
       try {
         const legacyRef = doc(db, 'sports_scores', scoreId);
         return await deleteDoc(legacyRef);

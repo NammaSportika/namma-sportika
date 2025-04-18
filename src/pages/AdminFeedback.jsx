@@ -22,10 +22,9 @@ const AdminFeedback = () => {
   const [loginError, setLoginError] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-  // Admin email list
+
   const ADMIN_EMAILS = ['bgangadh2@gitam.edu','pkoola@gitam.in','vagrawal@gitam.in'];
 
-  // List of sports
   const sports = [
     "All",
     "Cricket",
@@ -40,7 +39,6 @@ const AdminFeedback = () => {
     "Carrom"
   ];
 
-  // List of colleges
   const colleges = [
     "All",
     "GITAM School of Technology",
@@ -52,10 +50,8 @@ const AdminFeedback = () => {
     "GITAM School of Humanities"
   ];
 
-  // Rating options
   const ratings = ["All", "1", "2", "3", "4", "5"];
 
-  // Google Sign In
   const handleSignIn = async () => {
     try {
       setIsLoggingIn(true);
@@ -78,17 +74,15 @@ const AdminFeedback = () => {
     }
   };
 
-  // Auto logout after 15 minutes of inactivity
   useEffect(() => {
-    const inactivityTimeout = 15 * 60 * 1000; // 15 minutes in milliseconds
-    
+    const inactivityTimeout = 15 * 60 * 1000; 
     const checkActivity = () => {
       if (Date.now() - lastActivity > inactivityTimeout) {
         handleLogout();
       }
     };
 
-    const interval = setInterval(checkActivity, 60000); // Check every minute
+    const interval = setInterval(checkActivity, 60000);
     const activityEvents = ['mousedown', 'keydown', 'scroll', 'touchstart'];
     
     const updateActivity = () => {
@@ -107,7 +101,6 @@ const AdminFeedback = () => {
     };
   }, [lastActivity]);
 
-  // Handle logout
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -117,22 +110,18 @@ const AdminFeedback = () => {
     }
   };
 
-  // Fetch feedback with pagination
   const fetchFeedback = async (page = 1) => {
     try {
       setLoading(true);
       const feedbackRef = collection(db, 'feedback');
       
-      // Base query with timestamp ordering
       let queryConstraints = [orderBy('timestamp', 'desc')];
 
-      // Get total count for pagination
       const countQuery = query(feedbackRef, ...queryConstraints);
       const snapshot = await getDocs(countQuery);
       const total = snapshot.size;
       setTotalPages(Math.ceil(total / 20));
 
-      // Add pagination constraints
       queryConstraints.push(limit(20));
       
       if (page > 1) {
@@ -185,7 +174,6 @@ const AdminFeedback = () => {
     }
   };
 
-  // Navigation handlers
   const handlePrevPage = async () => {
     if (currentPage > 1) {
       await fetchFeedback(currentPage - 1);
@@ -225,26 +213,18 @@ const AdminFeedback = () => {
     };
   }, []);
 
-  // Add useEffect to handle filter and search changes
   useEffect(() => {
     if (isAuthenticated) {
       fetchFeedback(1);
     }
-  }, [filterSport, filterCollege, filterRating]); // Re-fetch when filters change
+  }, [filterSport, filterCollege, filterRating]);
 
-  // Update the filtering logic
   const getFilteredFeedback = useCallback(() => {
     return feedback.filter(entry => {
-      // Sport filter
       const matchesSport = filterSport === 'All' || entry.sport === filterSport;
-      
-      // College filter
       const matchesCollege = filterCollege === 'All' || entry.college === filterCollege;
-      
-      // Rating filter
       const matchesRating = filterRating === 'All' || entry.rating.toString() === filterRating;
 
-      // Search filter
       if (!searchTerm) return matchesSport && matchesCollege && matchesRating;
 
       const searchLower = searchTerm.toLowerCase();
@@ -263,37 +243,32 @@ const AdminFeedback = () => {
     });
   }, [feedback, filterSport, filterCollege, filterRating, searchTerm]);
 
-  // Use the memoized filtered results
   const filteredFeedback = getFilteredFeedback();
 
-  // Add debounced search
   useEffect(() => {
     const timer = setTimeout(() => {
       if (searchTerm) {
-        setCurrentPage(1); // Reset to first page when searching
+        setCurrentPage(1);
       }
     }, 300);
 
     return () => clearTimeout(timer);
   }, [searchTerm]);
 
-  // Filter handlers
   const handleSportFilter = (sport) => {
     setFilterSport(sport);
-    setCurrentPage(1); // Reset to first page when changing filters
+    setCurrentPage(1);
   };
 
   const handleCollegeFilter = (college) => {
     setFilterCollege(college);
-    setCurrentPage(1); // Reset to first page when changing filters
+    setCurrentPage(1);
   };
   
   const handleRatingFilter = (rating) => {
     setFilterRating(rating);
-    setCurrentPage(1); // Reset to first page when changing filters
+    setCurrentPage(1);
   };
-
-  // Handle Excel export
   const exportToExcel = () => {
     const dataToExport = filteredFeedback.map(entry => ({
       'Name': entry.name || '',
@@ -316,7 +291,6 @@ const AdminFeedback = () => {
     saveAs(data, `GITAM_Sports_Feedback_${new Date().toISOString().split('T')[0]}.xlsx`);
   };
 
-  // Function to render stars based on rating
   const renderStars = (rating) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {

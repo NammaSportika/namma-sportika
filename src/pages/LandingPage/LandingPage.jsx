@@ -7,7 +7,6 @@ import SportikaSponsor from './SportikaSponsor';
 import SportikaFaqs from './SportikaFaqs';
 import LandingPageNavbar from './LandingPageNavbar';
 
-// Animation variants for reusability
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
@@ -20,7 +19,6 @@ const fadeInRight = {
   exit: { opacity: 0, x: -20 }
 };
 
-// LandingPage component with improved structure
 const LandingPage = () => {
   return (
     <div className="min-h-screen bg-[#004740] overflow-x-hidden">

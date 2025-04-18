@@ -90,7 +90,6 @@ const SportikaSponsor = () => {
           ))}
         </motion.div>
 
-        {/* Other Sponsors Title */}
         <motion.div 
           className="text-center mb-8"
           variants={itemVariants}
@@ -102,7 +101,6 @@ const SportikaSponsor = () => {
           </h2>
         </motion.div>
 
-        {/* Other Sponsors Grid */}
         <motion.div 
           className="grid grid-cols-3 gap-8 max-w-4xl mx-auto mb-16"
           variants={containerVariants}

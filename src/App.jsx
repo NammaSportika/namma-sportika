@@ -56,7 +56,6 @@ const AppContent = () => {
           <Route path="/admin-registrations" element={<AdminRegistrations />} />
           <Route path="/admin-feedback" element={<AdminFeedback />} />
           <Route path="/team" element={<TeamPage />} />
-          {/* Nested routing for Scoreboard */}
           <Route path="/scoreboard/*" element={<ScoreBoardRouter />} />
           <Route path="/scoreboard" element={<SportsList />} />
           <Route path="/scoreboard/*" element={<ScoreBoardRouter />} />

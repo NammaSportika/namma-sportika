@@ -67,7 +67,7 @@ const AboutGitamSports = () => {
       >
         {/* Centered Card */}
         <div className="max-w-4xl mx-auto bg-[#07534c] rounded-lg shadow-lg p-8 flex flex-col md:flex-row items-center gap-8">
-          {/* Image (shown on the right on larger screens) */}
+          {/* Image */}
           <div className="order-2 md:order-1 w-full md:w-1/2">
             <h2 className="text-[#f9f871] text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
               <FlipText>GITAM Sports</FlipText>
@@ -77,7 +77,7 @@ const AboutGitamSports = () => {
             </p>
           </div>
 
-          {/* Text (shown on the left on larger screens) */}
+          {/* Text */}
           <div className="order-1 md:order-2 w-full md:w-1/2 flex justify-center">
             <img
               src="/imgs/AboutGS/1.png"

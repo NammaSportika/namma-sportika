@@ -74,13 +74,13 @@ const TeamSection = ({ title, contacts, cardsPerRow, noHeading }) => {
         className="grid gap-3 mx-auto" 
         style={{ 
           gridTemplateColumns: `repeat(${cardsPerRow}, minmax(0, 1fr))`,
-          maxWidth: `calc(${cardsPerRow} * 240px)` // Adjust based on max card width
+          maxWidth: `calc(${cardsPerRow} * 240px)`
         }}
       >
         {contacts.map((contact, index) => (
           <motion.div
             key={index}
-            className="min-w-0" // Allow card to shrink below default size
+            className="min-w-0"
             variants={{
               hidden: { opacity: 0, y: 20 },
               visible: { 
@@ -99,8 +99,7 @@ const TeamSection = ({ title, contacts, cardsPerRow, noHeading }) => {
 };
 
 const OurTeam = () => {
-   // Sample data for different team sections
-   const director = [
+  const director = [
     {
       image: "/imgs/Team/1.png",
       name: "Dr. Reema Chaudhury",
@@ -273,7 +272,6 @@ const OurTeam = () => {
         <TeamSection title="COACHES" contacts={coaches} cardsPerRow={5} />
         <TeamSection title="CHAIRS" contacts={chairs} cardsPerRow={4} />
         
-        {/* Modified HEADS section - With responsive grid for mobile */}
         <motion.div 
           className="w-full"
           initial="hidden"

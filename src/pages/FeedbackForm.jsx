@@ -96,25 +96,22 @@ const FeedbackForm = () => {
     if (validateForm()) {
       try {
         setIsSubmitting(true);
-        
-        // Create feedback data object with proper data types
+
         const feedbackData = {
           name: formData.name.trim(),
           email: formData.email.trim(),
           phone: formData.phone.trim(),
           college: formData.college,
           sport: formData.sport,
-          rating: Number(formData.rating), // Ensure rating is a number
+          rating: Number(formData.rating),
           message: formData.message.trim(),
-          timestamp: new Date(), // Firestore Timestamp
-          status: 'new' // Add a status field for tracking
+          timestamp: new Date(),
+          status: 'new'
         };
 
-        // Add to Firestore
         const docRef = await addDoc(collection(db, 'feedback'), feedbackData);
         console.log('Feedback submitted with ID:', docRef.id);
 
-        // Reset form
         setFormData({
           name: '',
           email: '',

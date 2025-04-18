@@ -8,7 +8,6 @@ const Navbar = ({ user, handleLogout }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Handle scroll effects
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -18,7 +17,6 @@ const Navbar = ({ user, handleLogout }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close menus when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (profileMenuOpen && !event.target.closest('.profile-menu-container')) {
@@ -36,7 +34,6 @@ const Navbar = ({ user, handleLogout }) => {
   const toggleProfileMenu = () => setProfileMenuOpen(!profileMenuOpen);
   const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
 
-  // Navigation links with proper capitalization
   const navLinks = [
     { to: '/', label: 'Home', onClick: () => navigate('/') },
     { to: '/about', label: 'About', onClick: () => navigate('/about') },
@@ -49,7 +46,6 @@ const Navbar = ({ user, handleLogout }) => {
     // { to: '/feedback', label: 'Feedback', onClick: () => navigate('/feedback') }
   ];
 
-  // Check if the link is active
   const isActive = (path) => location.pathname === path;
 
   return (

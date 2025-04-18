@@ -44,7 +44,6 @@ const SportikaFaqs = () => {
     }
   ];
 
-  // Filter FAQs based on search term
   useEffect(() => {
     const filtered = faqs.filter(faq => 
       faq.question.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -77,7 +76,6 @@ const SportikaFaqs = () => {
     }
   };
 
-  // Format the answer text to handle newlines and HTML properly
   const formatAnswer = (answer) => {
     if (answer.includes('<a href')) {
       return <div dangerouslySetInnerHTML={{ __html: answer }} />;

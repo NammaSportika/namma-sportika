@@ -19,7 +19,6 @@ import { Label } from '../components/ui/label';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
 
-// MarqueeBanner Component
 const MarqueeBanner = ({ message = "LAST DATE TO REGISTER IS 25th MARCH 2025", repeatCount = 5 }) => {
   const items = Array(repeatCount).fill(null);
   
@@ -50,9 +49,7 @@ const MarqueeBanner = ({ message = "LAST DATE TO REGISTER IS 25th MARCH 2025", r
   );
 };
 
-// RegistrationForm Component
 const RegistrationForm = () => {  
-  // Custom marquee animation styles
   const styles = `
     @keyframes marquee {
       0% { transform: translateX(0%); }
@@ -70,7 +67,6 @@ const RegistrationForm = () => {
     }
   `;
 
-  // Sports options with fee details
   const sportOptions = [
     "Athletics - 100m - 500/-",
     "Athletics - 200m - 500/-",
@@ -102,11 +98,9 @@ const RegistrationForm = () => {
   const [error, setError] = useState(null);
   const [showPopup, setShowPopup] = useState(true);
 
-  // Show popup on page load
   useEffect(() => {
     setShowPopup(true);
     
-    // Auto-hide popup after 8 seconds
     const timer = setTimeout(() => {
       setShowPopup(false);
     }, 8000);

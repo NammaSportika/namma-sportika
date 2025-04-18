@@ -3,8 +3,7 @@ import React, { useState, useEffect } from 'react';
 const Rulebook = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isMounted, setIsMounted] = useState(false);
-  
-  // Ensure the component is mounted before rendering
+
   useEffect(() => {
     setIsMounted(true);
     return () => {
@@ -13,7 +12,7 @@ const Rulebook = () => {
   }, []);
   
   if (!isMounted) {
-    return null; // Or render a loading state
+    return null;
   }
   
   return (

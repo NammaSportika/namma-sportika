@@ -27,7 +27,6 @@ const SportikaHighlights = () => {
     }
   };
 
-  // Combined array with images and titles
   const highlightItems = [
     {
       image: "/imgs/HighlightsImgs/3.png",

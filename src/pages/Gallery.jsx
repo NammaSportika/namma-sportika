@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { cn } from "../lib/utils";
 
-// Marquee Component
 const Marquee = ({
   className,
   reverse = false,
@@ -43,7 +42,6 @@ const Marquee = ({
   );
 };
 
-// CSS styles for marquee animations and loading skeleton
 const cssStyles = `
 @keyframes marquee {
   0% {
@@ -135,7 +133,6 @@ const cssStyles = `
 }
 `;
 
-// Image Card Component with enhanced loading optimization for PNG images
 const ImageCard = ({
   img,
   imgHeight = 250,
@@ -144,11 +141,8 @@ const ImageCard = ({
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
   
-  // Maintain aspect ratio
   const aspectRatio = imgHeight / imgWidth;
 
-  // Generate a smaller thumbnail version path for initial quick loading
-  // Assuming your images follow a pattern where thumbnails are named with -thumb suffix
   const thumbPath = img.replace(/\.(png|jpg|jpeg|webp)$/, '-thumb.$1');
   
   return (
@@ -208,20 +202,16 @@ const ImageCard = ({
   );
 };
 
-// Gallery Component with improved image loading strategy
 const Gallery = ({ 
   images = []
 }) => {
-  // Split images into three rows of 12 each for the marquee
   const firstRow = images.slice(0, 12);
   const secondRow = images.slice(12, 24);
   const thirdRow = images.slice(24, 36);
   
-  // Adjust marquee speed based on screen size and row content
-  const baseDuration = 30; // seconds for desktop
-  const mobileDuration = 20; // faster for mobile
+  const baseDuration = 30;
+  const mobileDuration = 20;
   
-  // Use window size to determine if we're on mobile (if available)
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   const durationBase = isMobile ? mobileDuration : baseDuration;
   

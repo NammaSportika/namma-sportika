@@ -16,14 +16,11 @@ const AdminRegistrations = () => {
   const [loginError, setLoginError] = useState('');
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   
-  // Pagination state (now for client-side pagination)
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage, setRecordsPerPage] = useState(20);
 
-  // Admin email list
   const ADMIN_EMAILS = ['bgangadh2@gitam.edu','pkoola@gitam.in','vagrawal@gitam.in'];
 
-  // List of sports
   const sports = [
     "All",
     "Athletics - 100m - 500/-",
@@ -39,7 +36,6 @@ const AdminRegistrations = () => {
     "Volleyball - 1500/-"
   ];
 
-  // Google Sign In
   const handleSignIn = async () => {
     try {
       setIsLoggingIn(true);
@@ -62,9 +58,8 @@ const AdminRegistrations = () => {
     }
   };
 
-  // Auto logout after 15 minutes of inactivity
   useEffect(() => {
-    const inactivityTimeout = 15 * 60 * 1000; // 15 minutes in milliseconds
+    const inactivityTimeout = 15 * 60 * 1000; 
     
     const checkActivity = () => {
       if (Date.now() - lastActivity > inactivityTimeout) {
@@ -72,7 +67,7 @@ const AdminRegistrations = () => {
       }
     };
 
-    const interval = setInterval(checkActivity, 60000); // Check every minute
+    const interval = setInterval(checkActivity, 60000);
     const activityEvents = ['mousedown', 'keydown', 'scroll', 'touchstart'];
     
     const updateActivity = () => {
@@ -91,7 +86,6 @@ const AdminRegistrations = () => {
     };
   }, [lastActivity]);
 
-  // Handle logout
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -101,13 +95,11 @@ const AdminRegistrations = () => {
     }
   };
 
-  // Fetch all registrations at once
   const fetchAllRegistrations = async () => {
     try {
       setLoading(true);
       const registrationsRef = collection(db, 'registrations');
       
-      // Base query with timestamp ordering
       const registrationsQuery = query(
         registrationsRef,
         orderBy('timestamp', 'desc')
@@ -140,7 +132,6 @@ const AdminRegistrations = () => {
     }
   };
 
-  // Setup authentication on initial load
   useEffect(() => {
     let unsubscribe;
     const setupAuth = async () => {
@@ -168,17 +159,13 @@ const AdminRegistrations = () => {
     };
   }, []);
 
-  // Filter and search in memory (optimized with useMemo)
   const filteredRegistrations = useMemo(() => {
     return registrations.filter(reg => {
-      // Sport filter - exact match
       const matchesSport = filterSport === 'All' || reg.sport === filterSport;
 
-      // Search filter
       if (!searchTerm) return matchesSport;
 
       const searchLower = searchTerm.toLowerCase();
-      // Optimize by checking most common fields first
       return (
         matchesSport && (
           (reg.name && reg.name.toLowerCase().includes(searchLower)) ||
@@ -191,19 +178,18 @@ const AdminRegistrations = () => {
     });
   }, [registrations, filterSport, searchTerm]);
 
-  // Create paginated data for current view
   const currentRecords = useMemo(() => {
     const indexOfLastRecord = currentPage * recordsPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
     return filteredRegistrations.slice(indexOfFirstRecord, indexOfLastRecord);
   }, [filteredRegistrations, currentPage, recordsPerPage]);
 
-  // Calculate total pages
+
   const totalPages = useMemo(() => {
     return Math.ceil(filteredRegistrations.length / recordsPerPage);
   }, [filteredRegistrations, recordsPerPage]);
 
-  // Navigation handlers
+
   const handlePrevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
@@ -216,24 +202,19 @@ const AdminRegistrations = () => {
     }
   };
 
-  // Reset to first page when filter or search changes
   useEffect(() => {
     setCurrentPage(1);
   }, [filterSport, searchTerm]);
-
-  // Handle sport filter change
   const handleSportFilter = (sport) => {
     setFilterSport(sport);
   };
 
-  // Handle records per page change
   const handleRecordsPerPageChange = (e) => {
     const value = parseInt(e.target.value);
     setRecordsPerPage(value);
-    setCurrentPage(1); // Reset to first page when changing display count
+    setCurrentPage(1);
   };
 
-  // Handle Excel export - export all filtered data
   const exportToExcel = () => {
     const dataToExport = filteredRegistrations.map(reg => ({
       'Name': reg.name || '',

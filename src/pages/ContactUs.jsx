@@ -2,15 +2,13 @@ import React from 'react';
 import { FiPhone, FiMail, FiUser, FiBriefcase } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 
-// ---------- ContactUs Component ---------- //
 const ContactUs = () => {
-  // Brand colors (if needed elsewhere)
   const brandColors = {
-    primary: "#07534c",    // Dark teal (container background)
-    secondary: "#a58255",  // Brown/gold
-    background: "#f4e4c9", // Light cream background
-    accent: "#e7fefe",     // Light teal (for rows and lines)
-    heading: "#f9f871"     // Yellow (for headings)
+    primary: "#07534c",
+    secondary: "#a58255",
+    background: "#f4e4c9",
+    accent: "#e7fefe",
+    heading: "#f9f871"
   };
 
   return (
@@ -123,8 +121,6 @@ const ContactUs = () => {
   );
 };
 
-// ---------- OurTeam Components ---------- //
-
 const TeamCard = ({ contact }) => {
   return (
     <div className="h-full w-full px-4 py-3">
@@ -225,26 +221,25 @@ const TeamSection = ({ title, contacts }) => {
 };
 
 const OurTeam = () => {
-  // List of developers for our team with LinkedIn URLs
   const developers = [
     {
       image: "/imgs/TeamPics/1.svg",
       name: "Vansh Agrawal",
-      linkedin: "https://www.linkedin.com/in/agrawalvansh/", // Replace with actual LinkedIn URL
+      linkedin: "https://www.linkedin.com/in/agrawalvansh/",
       phone: "+91-7378882317",
       email: "agrawalvanshn@gmail.com"
     },
     {
       image: "/imgs/TeamPics/3.svg",
       name: "Adarsha T A",
-      linkedin: "https://www.linkedin.com/in/adarsha-thonder/", // Replace with actual LinkedIn URL
+      linkedin: "https://www.linkedin.com/in/adarsha-thonder/",
       phone: "+91-8073638086",
       email: "athonder@gitam.in"
     },
     {
       image: "/imgs/TeamPics/2.svg",
       name: "Sidhartha Varma",
-      linkedin: "https://www.linkedin.com/in/sidhartha-varma-konduru-67224134a/", // Replace with actual LinkedIn URL
+      linkedin: "https://www.linkedin.com/in/sidhartha-varma-konduru-67224134a/",
       phone: "+91-7032192991",
       email: "skonduru2005@gmail.com"
     }
