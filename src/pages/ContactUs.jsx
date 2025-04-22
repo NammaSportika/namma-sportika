@@ -25,7 +25,7 @@ const ContactUs = () => {
       </div>
 
       {/* Contact Information Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 md:gap-6 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-1  gap-4 sm:gap-5 md:gap-6 max-w-xl mx-auto">
         {/* Managers Card */}
         <div className="md:col-span-1 sm:w-3/4 mx-auto md:w-full">
           <div className="bg-[#07534c] rounded-lg shadow-md overflow-hidden">
@@ -41,13 +41,13 @@ const ContactUs = () => {
                 <p className="text-[#e7fefe] font-medium text-base sm:text-lg truncate pr-2">
                   Mr. D. Vamsi
                 </p>
-                <a
+                {/* <a
                   href="tel:7349495176"
                   className="flex items-center gap-1 sm:gap-2 text-[#e7fefe] hover:text-white transition-colors whitespace-nowrap"
                 >
                   <FiPhone />
                   <span className="font-medium">7349495176</span>
-                </a>
+                </a> */}
               </div>
               <div className="flex items-center justify-between bg-[#a58255] rounded-lg p-3 sm:p-4">
                 <a
@@ -65,7 +65,7 @@ const ContactUs = () => {
         </div>
 
         {/* Student Co-ordinators Card */}
-        <div className="md:col-span-1 sm:w-3/4 mx-auto md:w-full">
+        {/* <div className="md:col-span-1 sm:w-3/4 mx-auto md:w-full">
           <div className="bg-[#07534c] rounded-lg shadow-md overflow-hidden">
             <div className="relative flex items-center justify-center py-3 sm:py-4 md:py-5">
               <div className="absolute left-4 sm:left-5 md:left-6 right-4 sm:right-5 md:right-6 h-[2px]"></div>
@@ -112,7 +112,7 @@ const ContactUs = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* OUR TEAM Section */}
@@ -162,12 +162,12 @@ const TeamCard = ({ contact }) => {
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
+          {/* <div className="flex items-center gap-2">
             <FiPhone className="text-[#e7fefe] w-4 h-4" />
             <p className="text-[#e7fefe] text-xs">
               {contact.phone}
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
@@ -226,21 +226,21 @@ const OurTeam = () => {
       image: "/imgs/TeamPics/1.svg",
       name: "Vansh Agrawal",
       linkedin: "https://www.linkedin.com/in/agrawalvansh/",
-      phone: "+91-7378882317",
+      // phone: "+91-7378882317",
       email: "agrawalvanshn@gmail.com"
     },
     {
       image: "/imgs/TeamPics/3.svg",
       name: "Adarsha T A",
       linkedin: "https://www.linkedin.com/in/adarsha-thonder/",
-      phone: "+91-8073638086",
+      // phone: "+91-8073638086",
       email: "athonder@gitam.in"
     },
     {
       image: "/imgs/TeamPics/2.svg",
       name: "Sidhartha Varma",
       linkedin: "https://www.linkedin.com/in/sidhartha-varma-konduru-67224134a/",
-      phone: "+91-7032192991",
+      // phone: "+91-7032192991",
       email: "skonduru2005@gmail.com"
     }
   ];

@@ -13,6 +13,7 @@ import ThrowballScoreWomen from './ThrowballScoreWomen';
 import BasketballScoreboardMen from './BasketballScoreboardMen';
 import BasketballScoreboardWomen from './BasketballScoreboardWomen';
 import SportsAdmin from '../ScoreBoardAdmin/SportsAdmin';
+import AthleticsScore from './AthleticsScore';
 const ScoreBoardRouter = () => {
   return (
     <Routes>
@@ -27,6 +28,7 @@ const ScoreBoardRouter = () => {
       <Route path="basketball-men" element={<BasketballScoreboardMen />} />
       <Route path="basketball-women" element={<BasketballScoreboardWomen />} />
       <Route path="score-admin" element={<SportsAdmin />} />
+      <Route path="athletics" element={<AthleticsScore />} />
       {/* Default route to redirect to SportsList if no specific scoreboard is matched */}
       <Route index element={<SportsList />} />
 

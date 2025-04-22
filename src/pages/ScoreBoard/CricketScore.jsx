@@ -111,6 +111,8 @@ const CricketScore = () => {
   const [matches, setMatches] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [winner, setWinner] = useState(null);
+  const [runnerUp, setRunnerUp] = useState(null);
 
   useEffect(() => {
     const getMatches = async () => {
@@ -138,6 +140,19 @@ const CricketScore = () => {
         }));
         
         setMatches(formattedMatches);
+        
+        // Find the final match with a winner
+        const finalMatch = formattedMatches.find(match => match.winner);
+        
+        if (finalMatch) {
+          // Set winner
+          const winnerTeam = finalMatch.winner === finalMatch.team1.name ? finalMatch.team1 : finalMatch.team2;
+          setWinner(winnerTeam);
+          
+          // Set runner-up
+          const runnerUpTeam = finalMatch.winner === finalMatch.team1.name ? finalMatch.team2 : finalMatch.team1;
+          setRunnerUp(runnerUpTeam);
+        }
       } catch (err) {
         console.error('Error fetching cricket matches:', err);
         setError('Failed to load matches. Please try again later.');
@@ -163,6 +178,73 @@ const CricketScore = () => {
             <h1 className="text-2xl font-black text-[#e7fefe]">Cricket</h1>
           </div>
         </motion.header>
+
+        {/* Winner and Runner-Up Section */}
+        {winner && runnerUp && (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-4 xl:mb-10 flex flex-col md:flex-row justify-center xl:gap-0 gap-4"
+          >
+            {/* Winner Card */}
+            <div className="relative w-full max-w-xl px-4 xl:px-16">
+              <div className="overflow-hidden rounded-xl bg-gradient-to-br from-[#07534c] to-[#05433d] shadow-lg h-full">
+                <div className="border-b border-[#a58255]/20 bg-[#07534c]/90 py-2 text-center backdrop-blur-sm">
+                  <span className="text-sm font-bold text-[#e7fefe] tracking-wider flex items-center justify-center">
+                    <Trophy className="mr-2 h-5 w-5 text-[#a58255]" />
+                    WINNER
+                  </span>
+                </div>
+                <div className="p-6 flex flex-col items-center">
+                  <div className="relative mb-2 h-20 w-20 md:h-24 md:w-24">
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      className="absolute inset-0 rounded-full border-2 border-[#a58255] p-1"
+                    >
+                      <img 
+                        src={winner.logo || '/imgs/icon/icon.svg'} 
+                        alt={`${winner.name} logo`}
+                        className="h-full w-full rounded-full object-cover"
+                      />
+                    </motion.div>
+                  </div>
+                  <h2 className="text-center text-lg md:text-xl font-black text-[#e7fefe]">
+                    {winner.name}
+                  </h2>
+                </div>
+              </div>
+            </div>
+
+            {/* Runner-Up Card */}
+            <div className="relative w-full max-w-xl px-4 xl:px-16">
+              <div className="overflow-hidden rounded-xl bg-gradient-to-br from-[#07534c] to-[#05433d] shadow-lg h-full">
+                <div className="border-b border-[#a58255]/20 bg-[#07534c]/90 py-2 text-center backdrop-blur-sm">
+                  <span className="text-sm font-bold text-[#e7fefe] tracking-wider flex items-center justify-center">
+                    <Award className="mr-2 h-5 w-5 text-[#a58255]" />
+                    RUNNER UP
+                  </span>
+                </div>
+                <div className="p-6 flex flex-col items-center">
+                  <div className="relative mb-2 h-20 w-20 md:h-24 md:w-24">
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      className="absolute inset-0 rounded-full border-2 border-[#a58255] p-1"
+                    >
+                      <img 
+                        src={runnerUp.logo || '/imgs/icon/icon.svg'} 
+                        alt={`${runnerUp.name} logo`}
+                        className="h-full w-full rounded-full object-cover"
+                      />
+                    </motion.div>
+                  </div>
+                  <h2 className="text-center text-lg md:text-xl font-black text-[#e7fefe]">
+                    {runnerUp.name}
+                  </h2>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
 
         {/* Loading State */}
         {loading && (

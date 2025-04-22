@@ -29,23 +29,23 @@ const SportikaHighlights = () => {
 
   const highlightItems = [
     {
-      image: "/imgs/HighlightsImgs/3.png",
+      image: "/imgs/HighlightsImgs/1.png",
       title: "Grand Opening Ceremony"
     },
     {
-      image: "/imgs/HighlightsImgs/4.png",
+      image: "/imgs/HighlightsImgs/2.png",
       title: "Sports Competitions"
     },
     {
-      image: "/imgs/HighlightsImgs/5.png",
+      image: "/imgs/HighlightsImgs/3.png",
       title: "Talent Showcase"
     },
     {
-      image: "/imgs/HighlightsImgs/7.png",
+      image: "/imgs/HighlightsImgs/4.png",
       title: "Food Stalls & Entertainment"
     },
     {
-      image: "/imgs/HighlightsImgs/6.png",
+      image: "/imgs/HighlightsImgs/5.png",
       title: "Award Ceremony"
     }
   ];
