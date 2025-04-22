@@ -3,57 +3,57 @@ import { Trophy } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const AthleticsScore = () => {
-  // Sample data for Athletics (M) 100Mts
+  // Data for Athletics (M) 100Mts
   const athletics100MData = [
     {
       id: 1,
       name: "OPIO GLEN",
       college: "GITAM UNIVERSITY",
       position: "Winner",
-      logo: "/imgs/icon/icon.svg" // Default logo path
+      logo: "/imgs/collegeLogos/GITAM.png"
     },
     {
       id: 2,
       name: "RAKESH",
       college: "GITAM UNIVERSITY",
       position: "Runner Up",
-      logo: "/imgs/icon/icon.svg" // Default logo path
+      logo: "/imgs/collegeLogos/GITAM.png"
     }
   ];
 
-  // Sample data for Athletics (M) 200Mts
+  // Data for Athletics (M) 200Mts
   const athletics200MData = [
     {
       id: 1,
       name: "OPIO GLEN",
       college: "GITAM UNIVERSITY",
       position: "Winner",
-      logo: "/imgs/icon/icon.svg" // Default logo path
+      logo: "/imgs/collegeLogos/GITAM.png"
     },
     {
       id: 2,
       name: "RAKESH",
       college: "GITAM UNIVERSITY",
       position: "Runner Up",
-      logo: "/imgs/icon/icon.svg" // Default logo path
+      logo: "/imgs/collegeLogos/GITAM.png"
     }
   ];
 
-  // Sample data for Athletics (W) 100Mts
+  // Data for Athletics (W) 100Mts
   const athleticsW100MData = [
     {
       id: 1,
       name: "SUPRIYAT",
       college: "GITAM UNIVERSITY",
       position: "Winner",
-      logo: "/imgs/icon/icon.svg" // Default logo path
+      logo: "/imgs/collegeLogos/GITAM.png"
     },
     {
       id: 2,
       name: "Angelin Elizabeth",
-      college: "GITAM UNIVERSITY",
+      college: "ALLIANCE UNIVERSITY",
       position: "Runner Up",
-      logo: "/imgs/icon/icon.svg" // Default logo path
+      logo: "/imgs/collegeLogos/ALLIANCE UNIVERSITY.png"
     }
   ];
 
