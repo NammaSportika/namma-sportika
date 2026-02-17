@@ -19,7 +19,7 @@ const AdminRegistrations = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage, setRecordsPerPage] = useState(20);
 
-  const ADMIN_EMAILS = ['bgangadh2@gitam.edu','pkoola@gitam.in','vagrawal@gitam.in'];
+  const ADMIN_EMAILS = ['bgangadh2@gitam.edu','pkoola@gitam.in','vagrawal@gitam.in','ryadav6@gitam.in'];
 
   const sports = [
     "All",
