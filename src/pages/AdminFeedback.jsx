@@ -23,7 +23,7 @@ const AdminFeedback = () => {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
 
-  const ADMIN_EMAILS = ['bgangadh2@gitam.edu','pkoola@gitam.in','vagrawal@gitam.in'];
+  const ADMIN_EMAILS = ['bgangadh2@gitam.edu','pkoola@gitam.in','vagrawal@gitam.in','ryadav6@gitam.in'];
 
   const sports = [
     "All",
